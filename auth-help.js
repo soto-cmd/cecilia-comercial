@@ -16,7 +16,7 @@
     if(!guide&&head){
       guide=document.createElement('div');
       guide.id='authGuide';
-      guide.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 18px';
+      guide.style.cssText='display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:14px 0 18px';
       guide.innerHTML=`
         <div style="border:1px solid #e6c24a;background:#fff8df;border-radius:12px;padding:12px 14px;line-height:1.45">
           <strong style="display:block;margin-bottom:5px">Primera vez</strong>
@@ -45,7 +45,7 @@
       if(!help){
         help=document.createElement('div');
         help.id='authPasswordHelp';
-        help.style.cssText='display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:6px';
+        help.style.cssText='display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:6px;flex-wrap:wrap';
         help.innerHTML='<small style="color:#6b7280;font-size:12px">Mínimo 6 caracteres. Recomendado: 8 o más.</small><button type="button" id="toggleAuthPassword" style="border:0;background:transparent;color:#9a7200;font-weight:700;cursor:pointer;padding:2px 0">Mostrar contraseña</button>';
         pass.insertAdjacentElement('afterend',help);
         document.getElementById('toggleAuthPassword')?.addEventListener('click',e=>{
