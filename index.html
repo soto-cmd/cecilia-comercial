@@ -50,7 +50,8 @@
       <section id="clientes" class="view">
         <div class="page-head"><div><span class="eyebrow">Cartera</span><h2>Clientes</h2><p>Consulta saldos y movimientos de cada cuenta.</p></div><button class="btn btn-primary" onclick="openClientModal()">+ Nuevo cliente</button></div>
         <div class="panel" style="margin-bottom:18px;padding:16px 18px;border-left:4px solid #c9a227"><strong>Cómo usar esta pantalla</strong><p style="margin:6px 0 0">Creá un cliente una sola vez. Después podés abrir su ficha para ver saldo, deudas, pagos y movimientos. Usá el buscador para encontrarlo rápido.</p></div>
-        <div class="toolbar"><input id="clientSearch" class="search" placeholder="Buscar por nombre, documento o teléfono" aria-label="Buscar clientes" /></div><div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Documento</th><th>Teléfono</th><th>Saldo</th><th>Acciones</th></tr></thead><tbody id="clientsTable"></tbody></table></div>
+        <div class="toolbar"><input id="clientSearch" class="search" placeholder="Buscar por nombre, documento o teléfono" aria-label="Buscar clientes" /></div>
+        <div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Documento</th><th>Teléfono</th><th>Saldo</th><th>Acciones</th></tr></thead><tbody id="clientsTable"></tbody></table></div>
       </section>
 
       <section id="deudas" class="view">
@@ -68,7 +69,8 @@
       <section id="reportes" class="view">
         <div class="page-head"><div><span class="eyebrow">Análisis</span><h2>Reportes</h2><p>Indicadores consolidados de cartera y cobranzas.</p></div><button class="btn btn-secondary" onclick="exportExcel()">Exportar Excel</button></div>
         <div class="panel" style="margin-bottom:18px;padding:16px 18px;border-left:4px solid #c9a227"><strong>Cómo usar los reportes</strong><p style="margin:6px 0 0">Revisá cuánto se debe, cuánto ya se cobró y el saldo de cada cliente. Usá “Exportar Excel” para guardar una copia y trabajar los datos fuera de Cecilia.</p></div>
-        <div class="cards report-grid"><article class="card kpi-card"><span class="kpi-label">Deuda total registrada</span><strong id="repDeuda">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Total cobrado</span><strong id="repPagado">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Saldo pendiente</span><strong id="repSaldo">Gs. 0</strong></article></div><article class="panel"><div class="panel-head"><div><h3>Saldos por cliente</h3><p>Comparativo de deuda, pagos y saldo</p></div></div><div id="reportClientBalances"></div></article>
+        <div class="cards report-grid"><article class="card kpi-card"><span class="kpi-label">Deuda total registrada</span><strong id="repDeuda">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Total cobrado</span><strong id="repPagado">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Saldo pendiente</span><strong id="repSaldo">Gs. 0</strong></article></div>
+        <article class="panel"><div class="panel-head"><div><h3>Saldos por cliente</h3><p>Comparativo de deuda, pagos y saldo</p></div></div><div id="reportClientBalances"></div></article>
       </section>
 
       <section id="config" class="view">
@@ -82,7 +84,8 @@
       <section id="clientDetail" class="view">
         <div class="page-head"><div><button class="link-btn" onclick="goView('clientes')">← Volver a clientes</button><span class="eyebrow">Cuenta corriente</span><h2 id="detailName">Cliente</h2><p id="detailMeta"></p></div><div class="button-row"><button class="btn btn-secondary" onclick="openDebtModal(currentClientId)">+ Deuda</button><button class="btn btn-primary" onclick="openPaymentModal(currentClientId)">+ Pago</button></div></div>
         <div class="panel" style="margin-bottom:18px;padding:16px 18px;border-left:4px solid #c9a227"><strong>Cuenta del cliente</strong><p style="margin:6px 0 0">Acá ves todos sus cargos y abonos. Podés registrar una deuda o un pago directamente para este cliente sin volver a seleccionarlo.</p></div>
-        <div class="cards report-grid"><article class="card kpi-card"><span class="kpi-label">Deuda registrada</span><strong id="detailDebt">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Pagado</span><strong id="detailPaid">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Saldo</span><strong id="detailBalance">Gs. 0</strong></article></div><article class="panel"><div class="panel-head"><div><h3>Movimientos de la cuenta</h3><p>Cargos y abonos en orden cronológico</p></div></div><div class="table-wrap embedded"><table><thead><tr><th>Fecha</th><th>Movimiento</th><th>Detalle</th><th>Cargo</th><th>Abono</th><th>Saldo</th></tr></thead><tbody id="detailLedger"></tbody></table></div></article>
+        <div class="cards report-grid"><article class="card kpi-card"><span class="kpi-label">Deuda registrada</span><strong id="detailDebt">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Pagado</span><strong id="detailPaid">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Saldo</span><strong id="detailBalance">Gs. 0</strong></article></div>
+        <article class="panel"><div class="panel-head"><div><h3>Movimientos de la cuenta</h3><p>Cargos y abonos en orden cronológico</p></div></div><div class="table-wrap embedded"><table><thead><tr><th>Fecha</th><th>Movimiento</th><th>Detalle</th><th>Cargo</th><th>Abono</th><th>Saldo</th></tr></thead><tbody id="detailLedger"></tbody></table></div></article>
       </section>
     </section>
   </main>
@@ -93,11 +96,14 @@
 
   <dialog id="paymentModal"><form method="dialog" id="paymentForm"><div class="modal-head"><span class="eyebrow">Cobranzas</span><h3>Registrar pago</h3></div><label>Cliente<select required id="pClient"></select></label><label>Monto (Gs.)<input required type="number" min="1" step="1" id="pAmount" inputmode="numeric" /></label><label>Fecha<input required type="date" id="pDate" /></label><label>Medio de pago<select id="pMethod"><option>Efectivo</option><option>Transferencia</option><option>QR</option><option>Otro</option></select></label><label>Referencia<input id="pRef" /></label><div class="modal-actions"><button type="button" class="btn btn-secondary" onclick="this.closest('dialog').close()">Cancelar</button><button type="button" class="btn btn-primary" id="savePaymentBtn">Guardar pago</button></div></form></dialog>
 
-  <dialog id="authModal"><form method="dialog" id="authForm"><div class="modal-head"><span class="eyebrow">Acceso privado</span><h3>Cuenta de Cecilia</h3><p>Solo los correos autorizados pueden crear una cuenta y acceder a los datos compartidos.</p></div><label>Correo electrónico<input required type="email" id="authEmail" autocomplete="email" /></label><label>Contraseña<input required type="password" minlength="6" id="authPassword" autocomplete="current-password" /></label><div class="modal-actions"><button type="button" class="btn btn-secondary" onclick="this.closest('dialog').close()">Cancelar</button><button type="button" class="btn btn-secondary" onclick="signUpCloud()">Crear cuenta</button><button type="button" class="btn btn-primary" onclick="signInCloud()">Iniciar sesión</button></div></form></dialog>
+  <dialog id="authModal" style="max-width:640px"><form method="dialog" id="authForm"><div class="modal-head"><span class="eyebrow">Acceso privado</span><h3>Cuenta de Cecilia</h3><p><strong>Acceso exclusivo para usuarios autorizados.</strong> Elegí la opción que corresponda:</p><div id="authGuide" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:14px 0 18px"><div style="border:1px solid #e6c24a;background:#fff8df;border-radius:12px;padding:12px 14px;line-height:1.45"><strong style="display:block;margin-bottom:5px">Primera vez</strong><span style="font-size:13px;color:#4b5563">1. Ingresá tu correo autorizado.<br>2. Creá una contraseña de <strong>mínimo 6 caracteres</strong>.<br>3. Tocá <strong>Crear mi cuenta</strong>.<br>4. Si recibís un correo de confirmación, abrilo y confirmá tu dirección antes de iniciar sesión.</span></div><div style="border:1px solid #e5e7eb;background:#f9fafb;border-radius:12px;padding:12px 14px;line-height:1.45"><strong style="display:block;margin-bottom:5px">Ya tengo cuenta</strong><span style="font-size:13px;color:#4b5563">Ingresá el mismo correo y contraseña que registraste anteriormente y tocá <strong>Iniciar sesión</strong>.</span></div></div></div><label>Correo electrónico<input required type="email" id="authEmail" autocomplete="email" autocapitalize="none" spellcheck="false" placeholder="ejemplo@correo.com" /></label><label>Contraseña<input required type="password" minlength="6" id="authPassword" autocomplete="current-password" placeholder="Mínimo 6 caracteres" aria-describedby="authPasswordHelp" /><div id="authPasswordHelp" style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:6px;flex-wrap:wrap"><small style="color:#6b7280;font-size:12px">Mínimo 6 caracteres. Recomendado: 8 o más.</small><button type="button" id="toggleAuthPassword" style="border:0;background:transparent;color:#9a7200;font-weight:700;cursor:pointer;padding:2px 0" onclick="const p=document.getElementById('authPassword');const show=p.type==='password';p.type=show?'text':'password';this.textContent=show?'Ocultar contraseña':'Mostrar contraseña'">Mostrar contraseña</button></div></label><div class="modal-actions" style="flex-wrap:wrap;gap:10px"><button type="button" class="btn btn-secondary" onclick="this.closest('dialog').close()">Cancelar</button><button type="button" class="btn btn-secondary" onclick="signUpCloud()">Crear mi cuenta</button><button type="button" class="btn btn-primary" onclick="signInCloud()">Iniciar sesión</button></div></form></dialog>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="app.js"></script>
+  <script src="validationfix.js"></script>
+  <script src="session-ui.js"></script>
+  <script src="auth-help.js"></script>
   <script>
     (()=>{
       const originalUpdateAuthUi=updateAuthUi;
@@ -115,8 +121,7 @@
         const node=document.getElementById('userGreeting');
         if(!node)return;
         const name=greetingName();
-        if(currentUser&&workspaceId&&name){node.textContent=`Hola, ${name}`;node.style.display='inline-flex'}
-        else{node.textContent='';node.style.display='none'}
+        if(currentUser&&workspaceId&&name){node.textContent=`Hola, ${name}`;node.style.display='inline-flex'}else{node.textContent='';node.style.display='none'}
       };
       updateAuthUi=function(){originalUpdateAuthUi();paintGreeting()};
       document.addEventListener('DOMContentLoaded',paintGreeting);
