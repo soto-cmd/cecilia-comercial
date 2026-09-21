@@ -1,5 +1,5 @@
-const CACHE='cecilia-v11';
-const CORE=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest'];
+const CACHE='cecilia-v12';
+const CORE=['./','./index.html','./styles.css','./app.js','./validationfix.js','./manifest.webmanifest'];
 
 self.addEventListener('install',event=>{
   self.skipWaiting();
@@ -25,18 +25,27 @@ async function networkFirst(request,fallback){
   }
 }
 
+async function navigationResponse(request){
+  const raw=await networkFirst(request,'./index.html');
+  if(!raw)return raw;
+  try{
+    const type=raw.headers.get('content-type')||'';
+    if(!type.includes('text/html'))return raw;
+    let html=await raw.text();
+    if(!html.includes('validationfix.js'))html=html.replace('</body>','  <script src="validationfix.js"></script>\n</body>');
+    return new Response(html,{status:raw.status,statusText:raw.statusText,headers:{'content-type':'text/html; charset=utf-8'}});
+  }catch{return raw}
+}
+
 self.addEventListener('fetch',event=>{
   const request=event.request;
   if(request.method!=='GET')return;
   const url=new URL(request.url);
 
-  // Recursos externos (Supabase, CDN de XLSX, etc.) no pasan por el cache de Cecilia.
   if(url.origin!==self.location.origin)return;
 
-  // HTML y archivos de código SIEMPRE intentan red primero.
-  // Esto evita mezclar index.html nuevo con app.js viejo, que causaba la pantalla en blanco.
   if(request.mode==='navigate'){
-    event.respondWith(networkFirst(request,'./index.html'));
+    event.respondWith(navigationResponse(request));
     return;
   }
   if(['script','style','worker'].includes(request.destination) || /\.(?:js|css|html|webmanifest)$/i.test(url.pathname)){
@@ -44,7 +53,6 @@ self.addEventListener('fetch',event=>{
     return;
   }
 
-  // Imágenes y otros recursos estáticos: cache primero para mantener soporte offline.
   event.respondWith((async()=>{
     const cached=await caches.match(request);
     if(cached)return cached;
