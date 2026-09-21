@@ -32,7 +32,7 @@
       <div class="nav-group-title nav-group-gap">Gestión</div>
       <button class="nav" data-view="reportes"><span class="nav-icon">05</span><span>Reportes</span></button>
       <button class="nav" data-view="config"><span class="nav-icon">06</span><span>Configuración</span></button>
-      <div class="sidebar-note">Cecilia Comercial v1.2<br><span id="sidebarStorage">Copia local disponible.</span></div>
+      <div class="sidebar-note">Cecilia Comercial v1.3<br><span id="sidebarStorage">Copia local disponible.</span></div>
     </nav>
 
     <section class="content">
@@ -47,11 +47,11 @@
         <div class="grid-2"><article class="panel"><div class="panel-head"><div><h3>Clientes con mayor saldo</h3><p>Prioridad de cobranza</p></div></div><div id="topClientes"></div></article><article class="panel"><div class="panel-head"><div><h3>Últimos pagos</h3><p>Movimientos más recientes</p></div></div><div id="ultimosPagos"></div></article></div>
       </section>
 
-      <section id="clientes" class="view"><div class="page-head"><div><span class="eyebrow">Cartera</span><h2>Clientes</h2><p>Consulta saldos y movimientos de cada cuenta.</p></div><button class="btn btn-primary" onclick="openClientModal()">+ Nuevo cliente</button></div><div class="toolbar"><input id="clientSearch" class="search" placeholder="Buscar por nombre, documento o teléfono" aria-label="Buscar clientes" /></div><div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Documento</th><th>Teléfono</th><th>Saldo</th><th>Acción</th></tr></thead><tbody id="clientsTable"></tbody></table></div></section>
+      <section id="clientes" class="view"><div class="page-head"><div><span class="eyebrow">Cartera</span><h2>Clientes</h2><p>Consulta saldos y movimientos de cada cuenta.</p></div><button class="btn btn-primary" onclick="openClientModal()">+ Nuevo cliente</button></div><div class="toolbar"><input id="clientSearch" class="search" placeholder="Buscar por nombre, documento o teléfono" aria-label="Buscar clientes" /></div><div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Documento</th><th>Teléfono</th><th>Saldo</th><th>Acciones</th></tr></thead><tbody id="clientsTable"></tbody></table></div></section>
 
-      <section id="deudas" class="view"><div class="page-head"><div><span class="eyebrow">Cuentas por cobrar</span><h2>Deudas</h2><p>Control de cargos, vencimientos y saldos pendientes.</p></div><button class="btn btn-primary" onclick="openDebtModal()">+ Registrar deuda</button></div><div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Concepto</th><th>Fecha</th><th>Vence</th><th>Monto</th><th>Saldo</th><th>Estado</th></tr></thead><tbody id="debtsTable"></tbody></table></div></section>
+      <section id="deudas" class="view"><div class="page-head"><div><span class="eyebrow">Cuentas por cobrar</span><h2>Deudas</h2><p>Control de cargos, vencimientos y saldos pendientes.</p></div><button class="btn btn-primary" onclick="openDebtModal()">+ Registrar deuda</button></div><div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Concepto</th><th>Fecha</th><th>Vence</th><th>Monto</th><th>Saldo</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="debtsTable"></tbody></table></div></section>
 
-      <section id="pagos" class="view"><div class="page-head"><div><span class="eyebrow">Cobranzas</span><h2>Pagos</h2><p>Historial de cobros recibidos.</p></div><button class="btn btn-primary" onclick="openPaymentModal()">+ Registrar pago</button></div><div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Cliente</th><th>Monto</th><th>Medio</th><th>Referencia</th></tr></thead><tbody id="paymentsTable"></tbody></table></div></section>
+      <section id="pagos" class="view"><div class="page-head"><div><span class="eyebrow">Cobranzas</span><h2>Pagos</h2><p>Historial de cobros recibidos.</p></div><button class="btn btn-primary" onclick="openPaymentModal()">+ Registrar pago</button></div><div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Cliente</th><th>Monto</th><th>Medio</th><th>Referencia</th><th>Acciones</th></tr></thead><tbody id="paymentsTable"></tbody></table></div></section>
 
       <section id="reportes" class="view"><div class="page-head"><div><span class="eyebrow">Análisis</span><h2>Reportes</h2><p>Indicadores consolidados de cartera y cobranzas.</p></div><button class="btn btn-secondary" onclick="exportExcel()">Exportar Excel</button></div><div class="cards report-grid"><article class="card kpi-card"><span class="kpi-label">Deuda total registrada</span><strong id="repDeuda">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Total cobrado</span><strong id="repPagado">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Saldo pendiente</span><strong id="repSaldo">Gs. 0</strong></article></div><article class="panel"><div class="panel-head"><div><h3>Saldos por cliente</h3><p>Comparativo de deuda, pagos y saldo</p></div></div><div id="reportClientBalances"></div></article></section>
 
@@ -78,5 +78,6 @@
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="app.js"></script>
   <script src="privacy.js"></script>
+  <script src="crud.js"></script>
 </body>
 </html>
