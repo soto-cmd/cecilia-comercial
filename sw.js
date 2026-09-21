@@ -1,4 +1,4 @@
-const CACHE='cecilia-v16';
+const CACHE='cecilia-v17';
 const CORE=['./','./index.html','./styles.css','./app.js','./validationfix.js','./session-ui.js','./auth-help.js','./manifest.webmanifest'];
 
 self.addEventListener('install',event=>{
