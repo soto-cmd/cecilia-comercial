@@ -65,8 +65,21 @@
       </section>
 
       <section id="config" class="view">
-        <div class="section-title"><div><h2>Configuración</h2><p>Respaldo y datos</p></div></div>
-        <article class="panel"><h3>Respaldo</h3><p>Descargá todos los datos de Cecilia Comercial en un archivo JSON.</p><div class="button-row"><button class="primary" onclick="exportData()">Exportar datos</button><label class="secondary file-btn">Importar respaldo<input type="file" id="importFile" accept="application/json" hidden /></label><button class="danger" onclick="resetData()">Borrar datos</button></div></article>
+        <div class="section-title"><div><h2>Configuración</h2><p>Respaldo, exportación y seguridad de datos</p></div></div>
+        <article class="panel">
+          <h3>Exportar y respaldar</h3>
+          <p>Podés descargar un respaldo completo en JSON o un archivo Excel con hojas separadas para clientes, deudas, pagos y resumen.</p>
+          <div class="button-row">
+            <button class="primary" onclick="exportExcel()">Exportar a Excel</button>
+            <button class="secondary" onclick="exportData()">Respaldo JSON</button>
+            <label class="secondary file-btn">Importar respaldo<input type="file" id="importFile" accept="application/json" hidden /></label>
+          </div>
+        </article>
+        <article class="panel">
+          <h3>Zona de seguridad</h3>
+          <p>La eliminación total requiere dos confirmaciones y escribir la palabra <strong>BORRAR</strong>. Esta acción elimina clientes, deudas y pagos guardados en este dispositivo.</p>
+          <button class="danger" onclick="resetData()">Borrar todos los datos</button>
+        </article>
       </section>
 
       <section id="clientDetail" class="view">
@@ -83,6 +96,7 @@
 
   <dialog id="paymentModal"><form method="dialog" id="paymentForm"><h3>Registrar pago</h3><label>Cliente<select required id="pClient"></select></label><label>Monto (Gs.)<input required type="number" min="1" id="pAmount" /></label><label>Fecha<input required type="date" id="pDate" /></label><label>Medio de pago<select id="pMethod"><option>Efectivo</option><option>Transferencia</option><option>QR</option><option>Otro</option></select></label><label>Referencia<input id="pRef" /></label><div class="modal-actions"><button value="cancel" class="secondary">Cancelar</button><button value="default" class="primary" id="savePaymentBtn">Guardar</button></div></form></dialog>
 
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
