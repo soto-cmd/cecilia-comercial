@@ -12,9 +12,7 @@
 </head>
 <body>
   <header class="topbar">
-    <div class="brand">
-      <div class="brand-mark" aria-label="Cecilia Comercial">CC</div>
-    </div>
+    <div class="brand"><div class="brand-mark" aria-label="Cecilia Comercial">CC</div></div>
     <div class="top-actions">
       <span id="userGreeting" style="display:none;color:#f3df9b;font-size:13px;font-weight:750;white-space:nowrap"></span>
       <span id="dataBadge" class="data-badge">Comprobando acceso...</span>
@@ -39,6 +37,7 @@
     <section class="content">
       <section id="dashboard" class="view active">
         <div class="page-head"><div><span class="eyebrow">Panel general</span><h2>Resumen de cobranzas</h2><p>Situación actual de clientes, saldos y pagos.</p></div><div class="button-row"><button class="btn btn-secondary" onclick="openDebtModal()">Registrar deuda</button><button class="btn btn-primary" onclick="openPaymentModal()">Registrar pago</button></div></div>
+        <div class="panel" style="margin-bottom:18px;padding:16px 18px;border-left:4px solid #c9a227"><strong>Cómo usar esta pantalla</strong><p style="margin:6px 0 0">Acá ves el estado general del negocio. Registrá una deuda cuando un cliente compra a crédito y registrá un pago cuando recibís un cobro.</p></div>
         <div class="cards kpi-grid">
           <article class="card kpi-card"><span class="kpi-label">Total por cobrar</span><strong id="kpiSaldo">Gs. 0</strong><small>Saldo pendiente acumulado</small></article>
           <article class="card kpi-card"><span class="kpi-label">Cobrado este mes</span><strong id="kpiMes">Gs. 0</strong><small>Pagos registrados en el mes</small></article>
@@ -48,22 +47,43 @@
         <div class="grid-2"><article class="panel"><div class="panel-head"><div><h3>Clientes con mayor saldo</h3><p>Prioridad de cobranza</p></div></div><div id="topClientes"></div></article><article class="panel"><div class="panel-head"><div><h3>Últimos pagos</h3><p>Movimientos más recientes</p></div></div><div id="ultimosPagos"></div></article></div>
       </section>
 
-      <section id="clientes" class="view"><div class="page-head"><div><span class="eyebrow">Cartera</span><h2>Clientes</h2><p>Consulta saldos y movimientos de cada cuenta.</p></div><button class="btn btn-primary" onclick="openClientModal()">+ Nuevo cliente</button></div><div class="toolbar"><input id="clientSearch" class="search" placeholder="Buscar por nombre, documento o teléfono" aria-label="Buscar clientes" /></div><div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Documento</th><th>Teléfono</th><th>Saldo</th><th>Acciones</th></tr></thead><tbody id="clientsTable"></tbody></table></div></section>
+      <section id="clientes" class="view">
+        <div class="page-head"><div><span class="eyebrow">Cartera</span><h2>Clientes</h2><p>Consulta saldos y movimientos de cada cuenta.</p></div><button class="btn btn-primary" onclick="openClientModal()">+ Nuevo cliente</button></div>
+        <div class="panel" style="margin-bottom:18px;padding:16px 18px;border-left:4px solid #c9a227"><strong>Cómo usar esta pantalla</strong><p style="margin:6px 0 0">Creá un cliente una sola vez. Después podés abrir su ficha para ver saldo, deudas, pagos y movimientos. Usá el buscador para encontrarlo rápido.</p></div>
+        <div class="toolbar"><input id="clientSearch" class="search" placeholder="Buscar por nombre, documento o teléfono" aria-label="Buscar clientes" /></div><div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Documento</th><th>Teléfono</th><th>Saldo</th><th>Acciones</th></tr></thead><tbody id="clientsTable"></tbody></table></div>
+      </section>
 
-      <section id="deudas" class="view"><div class="page-head"><div><span class="eyebrow">Cuentas por cobrar</span><h2>Deudas</h2><p>Control de cargos, vencimientos y saldos pendientes.</p></div><button class="btn btn-primary" onclick="openDebtModal()">+ Registrar deuda</button></div><div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Concepto</th><th>Fecha</th><th>Vence</th><th>Monto</th><th>Saldo</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="debtsTable"></tbody></table></div></section>
+      <section id="deudas" class="view">
+        <div class="page-head"><div><span class="eyebrow">Cuentas por cobrar</span><h2>Deudas</h2><p>Control de cargos, vencimientos y saldos pendientes.</p></div><button class="btn btn-primary" onclick="openDebtModal()">+ Registrar deuda</button></div>
+        <div class="panel" style="margin-bottom:18px;padding:16px 18px;border-left:4px solid #c9a227"><strong>Cómo registrar una deuda</strong><p style="margin:6px 0 0">Elegí el cliente, escribí el concepto de la compra, ingresá el monto y la fecha. El vencimiento es opcional, pero ayuda a identificar deudas atrasadas.</p></div>
+        <div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Concepto</th><th>Fecha</th><th>Vence</th><th>Monto</th><th>Saldo</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="debtsTable"></tbody></table></div>
+      </section>
 
-      <section id="pagos" class="view"><div class="page-head"><div><span class="eyebrow">Cobranzas</span><h2>Pagos</h2><p>Historial de cobros recibidos.</p></div><button class="btn btn-primary" onclick="openPaymentModal()">+ Registrar pago</button></div><div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Cliente</th><th>Monto</th><th>Medio</th><th>Referencia</th><th>Acciones</th></tr></thead><tbody id="paymentsTable"></tbody></table></div></section>
+      <section id="pagos" class="view">
+        <div class="page-head"><div><span class="eyebrow">Cobranzas</span><h2>Pagos</h2><p>Historial de cobros recibidos.</p></div><button class="btn btn-primary" onclick="openPaymentModal()">+ Registrar pago</button></div>
+        <div class="panel" style="margin-bottom:18px;padding:16px 18px;border-left:4px solid #c9a227"><strong>Cómo registrar un pago</strong><p style="margin:6px 0 0">Seleccioná el cliente, ingresá cuánto pagó, la fecha y el medio de pago. La referencia sirve para anotar número de transferencia, recibo u otra observación corta.</p></div>
+        <div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Cliente</th><th>Monto</th><th>Medio</th><th>Referencia</th><th>Acciones</th></tr></thead><tbody id="paymentsTable"></tbody></table></div>
+      </section>
 
-      <section id="reportes" class="view"><div class="page-head"><div><span class="eyebrow">Análisis</span><h2>Reportes</h2><p>Indicadores consolidados de cartera y cobranzas.</p></div><button class="btn btn-secondary" onclick="exportExcel()">Exportar Excel</button></div><div class="cards report-grid"><article class="card kpi-card"><span class="kpi-label">Deuda total registrada</span><strong id="repDeuda">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Total cobrado</span><strong id="repPagado">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Saldo pendiente</span><strong id="repSaldo">Gs. 0</strong></article></div><article class="panel"><div class="panel-head"><div><h3>Saldos por cliente</h3><p>Comparativo de deuda, pagos y saldo</p></div></div><div id="reportClientBalances"></div></article></section>
+      <section id="reportes" class="view">
+        <div class="page-head"><div><span class="eyebrow">Análisis</span><h2>Reportes</h2><p>Indicadores consolidados de cartera y cobranzas.</p></div><button class="btn btn-secondary" onclick="exportExcel()">Exportar Excel</button></div>
+        <div class="panel" style="margin-bottom:18px;padding:16px 18px;border-left:4px solid #c9a227"><strong>Cómo usar los reportes</strong><p style="margin:6px 0 0">Revisá cuánto se debe, cuánto ya se cobró y el saldo de cada cliente. Usá “Exportar Excel” para guardar una copia y trabajar los datos fuera de Cecilia.</p></div>
+        <div class="cards report-grid"><article class="card kpi-card"><span class="kpi-label">Deuda total registrada</span><strong id="repDeuda">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Total cobrado</span><strong id="repPagado">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Saldo pendiente</span><strong id="repSaldo">Gs. 0</strong></article></div><article class="panel"><div class="panel-head"><div><h3>Saldos por cliente</h3><p>Comparativo de deuda, pagos y saldo</p></div></div><div id="reportClientBalances"></div></article>
+      </section>
 
       <section id="config" class="view">
         <div class="page-head"><div><span class="eyebrow">Sistema</span><h2>Configuración</h2><p>Respaldo, exportación y seguridad de datos.</p></div></div>
+        <div class="panel" style="margin-bottom:18px;padding:16px 18px;border-left:4px solid #c9a227"><strong>Antes de hacer cambios importantes</strong><p style="margin:6px 0 0">Verificá que aparezca “Sincronizado”. Exportá una copia si vas a importar, restaurar o borrar datos. La zona de seguridad elimina información y requiere confirmación.</p></div>
         <article class="panel"><div class="panel-head"><div><h3>Respaldo en la nube</h3><p id="cloudStatusText">La información se guarda primero en este equipo y luego se sincroniza de forma segura.</p></div></div><div class="button-row"><button id="configCloudBtn" class="btn btn-primary" onclick="openAuthModal()">Iniciar sesión</button><button id="restoreCloudBtn" class="btn btn-secondary hidden" onclick="restoreLatestCloudBackup()">Restaurar última copia</button><button id="signOutBtn" class="btn btn-secondary hidden" onclick="signOutCloud()">Cerrar sesión</button></div></article>
         <article class="panel"><div class="panel-head"><div><h3>Exportar y respaldar</h3><p>Mantené también una copia externa descargable.</p></div></div><div class="button-row"><button class="btn btn-primary" onclick="exportExcel()">Exportar a Excel</button><button class="btn btn-secondary" onclick="exportData()">Respaldo JSON</button><label class="btn btn-secondary file-btn">Importar respaldo<input type="file" id="importFile" accept="application/json" hidden /></label></div></article>
         <article class="panel danger-panel"><div class="panel-head"><div><h3>Zona de seguridad</h3><p>La eliminación total requiere confirmaciones adicionales y usa borrado persistente para evitar que los datos reaparezcan.</p></div></div><button class="btn btn-danger" onclick="resetData()">Borrar todos los datos</button></article>
       </section>
 
-      <section id="clientDetail" class="view"><div class="page-head"><div><button class="link-btn" onclick="goView('clientes')">← Volver a clientes</button><span class="eyebrow">Cuenta corriente</span><h2 id="detailName">Cliente</h2><p id="detailMeta"></p></div><div class="button-row"><button class="btn btn-secondary" onclick="openDebtModal(currentClientId)">+ Deuda</button><button class="btn btn-primary" onclick="openPaymentModal(currentClientId)">+ Pago</button></div></div><div class="cards report-grid"><article class="card kpi-card"><span class="kpi-label">Deuda registrada</span><strong id="detailDebt">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Pagado</span><strong id="detailPaid">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Saldo</span><strong id="detailBalance">Gs. 0</strong></article></div><article class="panel"><div class="panel-head"><div><h3>Movimientos de la cuenta</h3><p>Cargos y abonos en orden cronológico</p></div></div><div class="table-wrap embedded"><table><thead><tr><th>Fecha</th><th>Movimiento</th><th>Detalle</th><th>Cargo</th><th>Abono</th><th>Saldo</th></tr></thead><tbody id="detailLedger"></tbody></table></div></article></section>
+      <section id="clientDetail" class="view">
+        <div class="page-head"><div><button class="link-btn" onclick="goView('clientes')">← Volver a clientes</button><span class="eyebrow">Cuenta corriente</span><h2 id="detailName">Cliente</h2><p id="detailMeta"></p></div><div class="button-row"><button class="btn btn-secondary" onclick="openDebtModal(currentClientId)">+ Deuda</button><button class="btn btn-primary" onclick="openPaymentModal(currentClientId)">+ Pago</button></div></div>
+        <div class="panel" style="margin-bottom:18px;padding:16px 18px;border-left:4px solid #c9a227"><strong>Cuenta del cliente</strong><p style="margin:6px 0 0">Acá ves todos sus cargos y abonos. Podés registrar una deuda o un pago directamente para este cliente sin volver a seleccionarlo.</p></div>
+        <div class="cards report-grid"><article class="card kpi-card"><span class="kpi-label">Deuda registrada</span><strong id="detailDebt">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Pagado</span><strong id="detailPaid">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Saldo</span><strong id="detailBalance">Gs. 0</strong></article></div><article class="panel"><div class="panel-head"><div><h3>Movimientos de la cuenta</h3><p>Cargos y abonos en orden cronológico</p></div></div><div class="table-wrap embedded"><table><thead><tr><th>Fecha</th><th>Movimiento</th><th>Detalle</th><th>Cargo</th><th>Abono</th><th>Saldo</th></tr></thead><tbody id="detailLedger"></tbody></table></div></article>
+      </section>
     </section>
   </main>
 
@@ -85,10 +105,10 @@
         if(!currentUser)return '';
         const email=String(currentUser.email||'').toLowerCase();
         if(email==='l.adrian.soto@gmail.com')return 'Adrián';
+        if(email==='ecolman221@gmail.com')return 'Estela';
         const metaName=currentUser.user_metadata?.full_name||currentUser.user_metadata?.name||'';
         if(metaName)return String(metaName).trim().split(/\s+/)[0];
         const local=email.split('@')[0]||'';
-        if(local.includes('estela')||local.includes('colman'))return 'Estela';
         return local.replace(/[._-]+/g,' ').trim().split(/\s+/)[0].replace(/^./,c=>c.toUpperCase());
       };
       const paintGreeting=()=>{
