@@ -1,6 +1,14 @@
 (()=>{
+  const hasGreeting=()=>{
+    const node=document.getElementById('userGreeting');
+    return !!(node&&node.textContent&&node.textContent.trim());
+  };
+
   const isSigned=()=>{
-    try{return !!currentUser&&!!workspaceId}catch{return false}
+    try{
+      if(currentUser&&workspaceId)return true;
+    }catch{}
+    return hasGreeting();
   };
 
   const doSignOut=()=>{
@@ -23,8 +31,7 @@
   }
 
   function ensureHomeSignOut(){
-    const dashboard=document.getElementById('dashboard');
-    const row=dashboard?.querySelector('.page-head .button-row');
+    const row=document.querySelector('#dashboard .page-head .button-row');
     if(!row)return;
     let btn=document.getElementById('homeSignOutBtn');
     if(!btn){
@@ -46,6 +53,7 @@
     const login=document.getElementById('cloudBtn');
     const signOut=document.getElementById('topSignOutBtn');
     const homeSignOut=document.getElementById('homeSignOutBtn');
+
     if(login){
       login.textContent='Iniciar sesión';
       login.classList.toggle('hidden',signed);
@@ -59,7 +67,8 @@
     ensureTopSessionButtons();
     ensureHomeSignOut();
     paintSessionButtons();
-    setTimeout(paintSessionButtons,400);
+    setTimeout(paintSessionButtons,250);
+    setTimeout(paintSessionButtons,1000);
   });
 
   const wrap=()=>{
@@ -67,7 +76,7 @@
     const original=updateAuthUi;
     updateAuthUi=function(){
       original();
-      paintSessionButtons();
+      setTimeout(paintSessionButtons,0);
     };
     paintSessionButtons();
     return true;
