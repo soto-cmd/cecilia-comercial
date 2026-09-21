@@ -3,98 +3,99 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#111827" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="description" content="Cecilia Comercial - gestión de clientes, deudas y pagos" />
   <title>Cecilia Comercial</title>
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="topbar">
-    <div>
-      <h1>Cecilia Comercial</h1>
-      <p>Clientes, deudas y pagos</p>
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">CC</div>
+      <div>
+        <h1>Cecilia Comercial</h1>
+        <p>Gestión de clientes y cobranzas</p>
+      </div>
     </div>
-    <button id="installBtn" class="secondary hidden">Instalar app</button>
+    <div class="top-actions">
+      <span class="data-badge">Datos locales</span>
+      <button id="installBtn" class="btn btn-ghost hidden">Instalar app</button>
+    </div>
   </header>
 
   <main class="layout">
-    <nav class="sidebar">
-      <button class="nav active" data-view="dashboard">Inicio</button>
-      <button class="nav" data-view="clientes">Clientes</button>
-      <button class="nav" data-view="deudas">Deudas</button>
-      <button class="nav" data-view="pagos">Pagos</button>
-      <button class="nav" data-view="reportes">Reportes</button>
-      <button class="nav" data-view="config">Configuración</button>
+    <nav class="sidebar" aria-label="Navegación principal">
+      <div class="nav-group-title">Principal</div>
+      <button class="nav active" data-view="dashboard"><span class="nav-icon">01</span><span>Inicio</span></button>
+      <button class="nav" data-view="clientes"><span class="nav-icon">02</span><span>Clientes</span></button>
+      <button class="nav" data-view="deudas"><span class="nav-icon">03</span><span>Deudas</span></button>
+      <button class="nav" data-view="pagos"><span class="nav-icon">04</span><span>Pagos</span></button>
+      <div class="nav-group-title nav-group-gap">Gestión</div>
+      <button class="nav" data-view="reportes"><span class="nav-icon">05</span><span>Reportes</span></button>
+      <button class="nav" data-view="config"><span class="nav-icon">06</span><span>Configuración</span></button>
+      <div class="sidebar-note">Cecilia Comercial v1.1<br><span>Los datos se guardan en este dispositivo.</span></div>
     </nav>
 
     <section class="content">
       <section id="dashboard" class="view active">
-        <div class="section-title"><div><h2>Resumen</h2><p>Estado general de cobranzas</p></div></div>
-        <div class="cards">
-          <article class="card"><span>Total por cobrar</span><strong id="kpiSaldo">Gs. 0</strong></article>
-          <article class="card"><span>Cobrado este mes</span><strong id="kpiMes">Gs. 0</strong></article>
-          <article class="card"><span>Deuda vencida</span><strong id="kpiVencida">Gs. 0</strong></article>
-          <article class="card"><span>Clientes con saldo</span><strong id="kpiClientes">0</strong></article>
+        <div class="page-head">
+          <div><span class="eyebrow">Panel general</span><h2>Resumen de cobranzas</h2><p>Situación actual de clientes, saldos y pagos.</p></div>
+          <div class="button-row"><button class="btn btn-secondary" onclick="openDebtModal()">Registrar deuda</button><button class="btn btn-primary" onclick="openPaymentModal()">Registrar pago</button></div>
+        </div>
+        <div class="cards kpi-grid">
+          <article class="card kpi-card"><span class="kpi-label">Total por cobrar</span><strong id="kpiSaldo">Gs. 0</strong><small>Saldo pendiente acumulado</small></article>
+          <article class="card kpi-card"><span class="kpi-label">Cobrado este mes</span><strong id="kpiMes">Gs. 0</strong><small>Pagos registrados en el mes</small></article>
+          <article class="card kpi-card"><span class="kpi-label">Deuda vencida</span><strong id="kpiVencida">Gs. 0</strong><small>Saldos con vencimiento superado</small></article>
+          <article class="card kpi-card"><span class="kpi-label">Clientes con saldo</span><strong id="kpiClientes">0</strong><small>Clientes con deuda pendiente</small></article>
         </div>
         <div class="grid-2">
-          <article class="panel"><h3>Clientes con mayor saldo</h3><div id="topClientes"></div></article>
-          <article class="panel"><h3>Últimos pagos</h3><div id="ultimosPagos"></div></article>
+          <article class="panel"><div class="panel-head"><div><h3>Clientes con mayor saldo</h3><p>Prioridad de cobranza</p></div></div><div id="topClientes"></div></article>
+          <article class="panel"><div class="panel-head"><div><h3>Últimos pagos</h3><p>Movimientos más recientes</p></div></div><div id="ultimosPagos"></div></article>
         </div>
       </section>
 
       <section id="clientes" class="view">
-        <div class="section-title"><div><h2>Clientes</h2><p>Cuenta corriente por cliente</p></div><button class="primary" onclick="openClientModal()">+ Nuevo cliente</button></div>
-        <input id="clientSearch" class="search" placeholder="Buscar por nombre, documento o teléfono" />
-        <div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Documento</th><th>Teléfono</th><th>Saldo</th><th></th></tr></thead><tbody id="clientsTable"></tbody></table></div>
+        <div class="page-head"><div><span class="eyebrow">Cartera</span><h2>Clientes</h2><p>Consulta saldos y movimientos de cada cuenta.</p></div><button class="btn btn-primary" onclick="openClientModal()">+ Nuevo cliente</button></div>
+        <div class="toolbar"><input id="clientSearch" class="search" placeholder="Buscar por nombre, documento o teléfono" aria-label="Buscar clientes" /></div>
+        <div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Documento</th><th>Teléfono</th><th>Saldo</th><th>Acción</th></tr></thead><tbody id="clientsTable"></tbody></table></div>
       </section>
 
       <section id="deudas" class="view">
-        <div class="section-title"><div><h2>Deudas</h2><p>Cargos y vencimientos</p></div><button class="primary" onclick="openDebtModal()">+ Registrar deuda</button></div>
+        <div class="page-head"><div><span class="eyebrow">Cuentas por cobrar</span><h2>Deudas</h2><p>Control de cargos, vencimientos y saldos pendientes.</p></div><button class="btn btn-primary" onclick="openDebtModal()">+ Registrar deuda</button></div>
         <div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Concepto</th><th>Fecha</th><th>Vence</th><th>Monto</th><th>Saldo</th><th>Estado</th></tr></thead><tbody id="debtsTable"></tbody></table></div>
       </section>
 
       <section id="pagos" class="view">
-        <div class="section-title"><div><h2>Pagos</h2><p>Registro de cobranzas</p></div><button class="primary" onclick="openPaymentModal()">+ Registrar pago</button></div>
+        <div class="page-head"><div><span class="eyebrow">Cobranzas</span><h2>Pagos</h2><p>Historial de cobros recibidos.</p></div><button class="btn btn-primary" onclick="openPaymentModal()">+ Registrar pago</button></div>
         <div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Cliente</th><th>Monto</th><th>Medio</th><th>Referencia</th></tr></thead><tbody id="paymentsTable"></tbody></table></div>
       </section>
 
       <section id="reportes" class="view">
-        <div class="section-title"><div><h2>Reportes</h2><p>Indicadores de cobranza</p></div></div>
-        <div class="cards"><article class="card"><span>Deuda total registrada</span><strong id="repDeuda">Gs. 0</strong></article><article class="card"><span>Total cobrado</span><strong id="repPagado">Gs. 0</strong></article><article class="card"><span>Saldo pendiente</span><strong id="repSaldo">Gs. 0</strong></article></div>
-        <article class="panel"><h3>Saldos por cliente</h3><div id="reportClientBalances"></div></article>
+        <div class="page-head"><div><span class="eyebrow">Análisis</span><h2>Reportes</h2><p>Indicadores consolidados de cartera y cobranzas.</p></div><button class="btn btn-secondary" onclick="exportExcel()">Exportar Excel</button></div>
+        <div class="cards report-grid"><article class="card kpi-card"><span class="kpi-label">Deuda total registrada</span><strong id="repDeuda">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Total cobrado</span><strong id="repPagado">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Saldo pendiente</span><strong id="repSaldo">Gs. 0</strong></article></div>
+        <article class="panel"><div class="panel-head"><div><h3>Saldos por cliente</h3><p>Comparativo de deuda, pagos y saldo</p></div></div><div id="reportClientBalances"></div></article>
       </section>
 
       <section id="config" class="view">
-        <div class="section-title"><div><h2>Configuración</h2><p>Respaldo, exportación y seguridad de datos</p></div></div>
-        <article class="panel">
-          <h3>Exportar y respaldar</h3>
-          <p>Podés descargar un respaldo completo en JSON o un archivo Excel con hojas separadas para clientes, deudas, pagos y resumen.</p>
-          <div class="button-row">
-            <button class="primary" onclick="exportExcel()">Exportar a Excel</button>
-            <button class="secondary" onclick="exportData()">Respaldo JSON</button>
-            <label class="secondary file-btn">Importar respaldo<input type="file" id="importFile" accept="application/json" hidden /></label>
-          </div>
-        </article>
-        <article class="panel">
-          <h3>Zona de seguridad</h3>
-          <p>La eliminación total requiere dos confirmaciones y escribir la palabra <strong>BORRAR</strong>. Esta acción elimina clientes, deudas y pagos guardados en este dispositivo.</p>
-          <button class="danger" onclick="resetData()">Borrar todos los datos</button>
-        </article>
+        <div class="page-head"><div><span class="eyebrow">Sistema</span><h2>Configuración</h2><p>Respaldo, exportación y seguridad de datos.</p></div></div>
+        <article class="panel"><div class="panel-head"><div><h3>Exportar y respaldar</h3><p>Mantené una copia externa de tu información.</p></div></div><div class="button-row"><button class="btn btn-primary" onclick="exportExcel()">Exportar a Excel</button><button class="btn btn-secondary" onclick="exportData()">Respaldo JSON</button><label class="btn btn-secondary file-btn">Importar respaldo<input type="file" id="importFile" accept="application/json" hidden /></label></div></article>
+        <article class="panel danger-panel"><div class="panel-head"><div><h3>Zona de seguridad</h3><p>La eliminación total requiere confirmaciones adicionales y escribir BORRAR.</p></div></div><button class="btn btn-danger" onclick="resetData()">Borrar todos los datos</button></article>
       </section>
 
       <section id="clientDetail" class="view">
-        <div class="section-title"><div><button class="link-btn" onclick="goView('clientes')">← Volver</button><h2 id="detailName">Cliente</h2><p id="detailMeta"></p></div><div class="button-row"><button class="secondary" onclick="openDebtModal(currentClientId)">+ Deuda</button><button class="primary" onclick="openPaymentModal(currentClientId)">+ Pago</button></div></div>
-        <div class="cards"><article class="card"><span>Deuda registrada</span><strong id="detailDebt">Gs. 0</strong></article><article class="card"><span>Pagado</span><strong id="detailPaid">Gs. 0</strong></article><article class="card"><span>Saldo</span><strong id="detailBalance">Gs. 0</strong></article></div>
-        <article class="panel"><h3>Cuenta corriente</h3><div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Movimiento</th><th>Detalle</th><th>Cargo</th><th>Abono</th><th>Saldo</th></tr></thead><tbody id="detailLedger"></tbody></table></div></article>
+        <div class="page-head"><div><button class="link-btn" onclick="goView('clientes')">← Volver a clientes</button><span class="eyebrow">Cuenta corriente</span><h2 id="detailName">Cliente</h2><p id="detailMeta"></p></div><div class="button-row"><button class="btn btn-secondary" onclick="openDebtModal(currentClientId)">+ Deuda</button><button class="btn btn-primary" onclick="openPaymentModal(currentClientId)">+ Pago</button></div></div>
+        <div class="cards report-grid"><article class="card kpi-card"><span class="kpi-label">Deuda registrada</span><strong id="detailDebt">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Pagado</span><strong id="detailPaid">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Saldo</span><strong id="detailBalance">Gs. 0</strong></article></div>
+        <article class="panel"><div class="panel-head"><div><h3>Movimientos de la cuenta</h3><p>Cargos y abonos en orden cronológico</p></div></div><div class="table-wrap embedded"><table><thead><tr><th>Fecha</th><th>Movimiento</th><th>Detalle</th><th>Cargo</th><th>Abono</th><th>Saldo</th></tr></thead><tbody id="detailLedger"></tbody></table></div></article>
       </section>
     </section>
   </main>
 
-  <dialog id="clientModal"><form method="dialog" id="clientForm"><h3>Nuevo cliente</h3><label>Nombre completo<input required id="cName" /></label><label>Cédula / RUC<input id="cDoc" /></label><label>Teléfono<input id="cPhone" placeholder="0981..." /></label><label>Dirección<input id="cAddress" /></label><label>Observaciones<textarea id="cNotes"></textarea></label><div class="modal-actions"><button value="cancel" class="secondary">Cancelar</button><button value="default" class="primary" id="saveClientBtn">Guardar</button></div></form></dialog>
+  <dialog id="clientModal"><form method="dialog" id="clientForm"><div class="modal-head"><span class="eyebrow">Clientes</span><h3>Nuevo cliente</h3></div><label>Nombre completo<input required id="cName" autocomplete="name" /></label><label>Cédula / RUC<input id="cDoc" /></label><label>Teléfono<input id="cPhone" placeholder="0981..." inputmode="tel" /></label><label>Dirección<input id="cAddress" /></label><label>Observaciones<textarea id="cNotes"></textarea></label><div class="modal-actions"><button value="cancel" class="btn btn-secondary">Cancelar</button><button value="default" class="btn btn-primary" id="saveClientBtn">Guardar cliente</button></div></form></dialog>
 
-  <dialog id="debtModal"><form method="dialog" id="debtForm"><h3>Registrar deuda</h3><label>Cliente<select required id="dClient"></select></label><label>Concepto<input required id="dConcept" /></label><label>Monto (Gs.)<input required type="number" min="1" id="dAmount" /></label><label>Fecha<input required type="date" id="dDate" /></label><label>Vencimiento<input type="date" id="dDue" /></label><div class="modal-actions"><button value="cancel" class="secondary">Cancelar</button><button value="default" class="primary" id="saveDebtBtn">Guardar</button></div></form></dialog>
+  <dialog id="debtModal"><form method="dialog" id="debtForm"><div class="modal-head"><span class="eyebrow">Cuentas por cobrar</span><h3>Registrar deuda</h3></div><label>Cliente<select required id="dClient"></select></label><label>Concepto<input required id="dConcept" /></label><label>Monto (Gs.)<input required type="number" min="1" step="1" id="dAmount" inputmode="numeric" /></label><label>Fecha<input required type="date" id="dDate" /></label><label>Vencimiento<input type="date" id="dDue" /></label><div class="modal-actions"><button value="cancel" class="btn btn-secondary">Cancelar</button><button value="default" class="btn btn-primary" id="saveDebtBtn">Guardar deuda</button></div></form></dialog>
 
-  <dialog id="paymentModal"><form method="dialog" id="paymentForm"><h3>Registrar pago</h3><label>Cliente<select required id="pClient"></select></label><label>Monto (Gs.)<input required type="number" min="1" id="pAmount" /></label><label>Fecha<input required type="date" id="pDate" /></label><label>Medio de pago<select id="pMethod"><option>Efectivo</option><option>Transferencia</option><option>QR</option><option>Otro</option></select></label><label>Referencia<input id="pRef" /></label><div class="modal-actions"><button value="cancel" class="secondary">Cancelar</button><button value="default" class="primary" id="savePaymentBtn">Guardar</button></div></form></dialog>
+  <dialog id="paymentModal"><form method="dialog" id="paymentForm"><div class="modal-head"><span class="eyebrow">Cobranzas</span><h3>Registrar pago</h3></div><label>Cliente<select required id="pClient"></select></label><label>Monto (Gs.)<input required type="number" min="1" step="1" id="pAmount" inputmode="numeric" /></label><label>Fecha<input required type="date" id="pDate" /></label><label>Medio de pago<select id="pMethod"><option>Efectivo</option><option>Transferencia</option><option>QR</option><option>Otro</option></select></label><label>Referencia<input id="pRef" /></label><div class="modal-actions"><button value="cancel" class="btn btn-secondary">Cancelar</button><button value="default" class="btn btn-primary" id="savePaymentBtn">Guardar pago</button></div></form></dialog>
 
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="app.js"></script>
