@@ -1,4 +1,4 @@
-const CACHE='cecilia-v14';
+const CACHE='cecilia-v15';
 const CORE=['./','./index.html','./styles.css','./app.js','./validationfix.js','./session-ui.js','./auth-help.js','./manifest.webmanifest'];
 
 self.addEventListener('install',event=>{
@@ -45,7 +45,6 @@ self.addEventListener('fetch',event=>{
   const request=event.request;
   if(request.method!=='GET')return;
   const url=new URL(request.url);
-
   if(url.origin!==self.location.origin)return;
 
   if(request.mode==='navigate'){
