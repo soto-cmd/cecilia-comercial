@@ -26,7 +26,33 @@ function openDebtModal(cid=null){populateClientSelects();debtForm.reset();dDate.
 function openPaymentModal(cid=null){populateClientSelects();paymentForm.reset();pDate.value=today();if(cid)pClient.value=cid;paymentModal.showModal()}
 function bindForms(){saveClientBtn.addEventListener('click',e=>{e.preventDefault();if(!cName.value.trim())return alert('Ingresá el nombre del cliente.');state.clients.push({id:id(),name:cName.value.trim(),doc:cDoc.value.trim(),phone:cPhone.value.trim(),address:cAddress.value.trim(),notes:cNotes.value.trim(),createdAt:Date.now()});save();clientModal.close()});saveDebtBtn.addEventListener('click',e=>{e.preventDefault();if(!dClient.value||!dConcept.value.trim()||Number(dAmount.value)<=0)return alert('Completá cliente, concepto y monto.');state.debts.push({id:id(),clientId:dClient.value,concept:dConcept.value.trim(),amount:Number(dAmount.value),date:dDate.value||today(),due:dDue.value||'',createdAt:Date.now()});save();debtModal.close();if(currentClientId===dClient.value)showClient(currentClientId)});savePaymentBtn.addEventListener('click',e=>{e.preventDefault();if(!pClient.value||Number(pAmount.value)<=0)return alert('Completá cliente y monto.');const saldo=balance(pClient.value);if(Number(pAmount.value)>saldo&&saldo>0&&!confirm('El pago supera el saldo pendiente. ¿Registrar igualmente?'))return;state.payments.push({id:id(),clientId:pClient.value,amount:Number(pAmount.value),date:pDate.value||today(),method:pMethod.value,ref:pRef.value.trim(),createdAt:Date.now()});save();paymentModal.close();if(currentClientId===pClient.value)showClient(currentClientId)})}
 function exportData(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='cecilia-comercial-respaldo-'+today()+'.json';a.click();URL.revokeObjectURL(a.href)}
-function resetData(){if(confirm('Esto borrará todos los clientes, deudas y pagos guardados en este dispositivo.')){state={clients:[],debts:[],payments:[]};save();goView('dashboard')}}
+function exportExcel(){
+  if(typeof XLSX==='undefined'){alert('No se pudo cargar el módulo de Excel. Verificá tu conexión a internet e intentá nuevamente.');return}
+  const clientes=state.clients.map(c=>({Cliente:c.name,'Cédula/RUC':c.doc||'',Teléfono:c.phone||'',Dirección:c.address||'',Observaciones:c.notes||'','Deuda total':totalDebt(c.id),'Total pagado':totalPaid(c.id),'Saldo pendiente':balance(c.id)}));
+  const deudas=state.debts.map(d=>({Cliente:clientById(d.clientId)?.name||'',Concepto:d.concept,Fecha:fmtDate(d.date),Vencimiento:d.due?fmtDate(d.due):'',Monto:Number(d.amount),'Saldo pendiente':debtRemaining(d),Estado:debtRemaining(d)<=0?'Pagada':(d.due&&d.due<today()?'Vencida':'Pendiente')}));
+  const pagos=state.payments.map(p=>({Fecha:fmtDate(p.date),Cliente:clientById(p.clientId)?.name||'',Monto:Number(p.amount),'Medio de pago':p.method,Referencia:p.ref||''}));
+  const resumen=[{'Indicador':'Deuda total registrada','Monto':totalDebt()},{'Indicador':'Total cobrado','Monto':totalPaid()},{'Indicador':'Saldo pendiente','Monto':balance()},{'Indicador':'Cantidad de clientes','Monto':state.clients.length}];
+  const wb=XLSX.utils.book_new();
+  const addSheet=(rows,name,widths)=>{const ws=XLSX.utils.json_to_sheet(rows.length?rows:[{'Sin datos':''}]);ws['!cols']=widths.map(w=>({wch:w}));XLSX.utils.book_append_sheet(wb,ws,name)};
+  addSheet(resumen,'Resumen',[28,18]);
+  addSheet(clientes,'Clientes',[28,18,18,30,35,18,18,18]);
+  addSheet(deudas,'Deudas',[28,30,14,14,16,18,14]);
+  addSheet(pagos,'Pagos',[14,28,16,18,24]);
+  XLSX.writeFile(wb,'Cecilia_Comercial_'+today()+'.xlsx');
+}
+function resetData(){
+  if(!state.clients.length&&!state.debts.length&&!state.payments.length){alert('No hay datos para borrar.');return}
+  const first=confirm('ATENCIÓN: vas a eliminar TODOS los clientes, deudas y pagos de este dispositivo.\n\nAntes de continuar, recomendamos exportar un respaldo.\n\n¿Querés continuar?');
+  if(!first)return;
+  const typed=prompt('Confirmación final:\nEscribí BORRAR en mayúsculas para eliminar todos los datos.');
+  if(typed!=='BORRAR'){alert('Eliminación cancelada. No se borró ningún dato.');return}
+  const finalConfirm=confirm('Última confirmación: esta acción no se puede deshacer desde Cecilia Comercial. ¿Borrar definitivamente?');
+  if(!finalConfirm)return;
+  state={clients:[],debts:[],payments:[]};
+  save();
+  goView('dashboard');
+  alert('Todos los datos locales fueron eliminados.');
+}
 function fmtDate(s){if(!s)return'-';const [y,m,d]=s.split('-');return `${d}/${m}/${y}`}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function renderAll(){renderDashboard();renderClients();renderDebts();renderPayments();renderReports();populateClientSelects();if(currentClientId&&document.getElementById('clientDetail').classList.contains('active'))showClient(currentClientId)}
