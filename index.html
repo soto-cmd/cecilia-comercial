@@ -7,7 +7,6 @@
   <meta name="description" content="Cecilia Comercial - gestión de clientes, deudas y pagos" />
   <title>Cecilia Comercial</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <link rel="shortcut icon" href="favicon.svg" />
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -17,6 +16,7 @@
       <div class="brand-mark" aria-label="Cecilia Comercial">CC</div>
     </div>
     <div class="top-actions">
+      <span id="userGreeting" style="display:none;color:#f3df9b;font-size:13px;font-weight:750;white-space:nowrap"></span>
       <span id="dataBadge" class="data-badge">Comprobando acceso...</span>
       <button id="cloudBtn" class="btn btn-ghost" onclick="openAuthModal()">Iniciar sesión</button>
       <button id="installBtn" class="btn btn-ghost hidden">Instalar app</button>
@@ -78,5 +78,29 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="app.js"></script>
+  <script>
+    (()=>{
+      const originalUpdateAuthUi=updateAuthUi;
+      const greetingName=()=>{
+        if(!currentUser)return '';
+        const email=String(currentUser.email||'').toLowerCase();
+        if(email==='l.adrian.soto@gmail.com')return 'Adrián';
+        const metaName=currentUser.user_metadata?.full_name||currentUser.user_metadata?.name||'';
+        if(metaName)return String(metaName).trim().split(/\s+/)[0];
+        const local=email.split('@')[0]||'';
+        if(local.includes('estela')||local.includes('colman'))return 'Estela';
+        return local.replace(/[._-]+/g,' ').trim().split(/\s+/)[0].replace(/^./,c=>c.toUpperCase());
+      };
+      const paintGreeting=()=>{
+        const node=document.getElementById('userGreeting');
+        if(!node)return;
+        const name=greetingName();
+        if(currentUser&&workspaceId&&name){node.textContent=`Hola, ${name}`;node.style.display='inline-flex'}
+        else{node.textContent='';node.style.display='none'}
+      };
+      updateAuthUi=function(){originalUpdateAuthUi();paintGreeting()};
+      document.addEventListener('DOMContentLoaded',paintGreeting);
+    })();
+  </script>
 </body>
 </html>
