@@ -13,7 +13,7 @@
 
   const doSignOut=()=>signOutCloud();
 
-  function ensureTopSessionButtons(){
+  function ensureTopSessionButton(){
     const actions=document.querySelector('.top-actions');
     if(!actions)return;
     let signOut=document.getElementById('topSignOutBtn');
@@ -26,31 +26,14 @@
       signOut.addEventListener('click',doSignOut);
       actions.appendChild(signOut);
     }
+    document.getElementById('homeSignOutBtn')?.remove();
   }
 
-  function ensureHomeSignOut(){
-    const row=document.querySelector('#dashboard .page-head .button-row');
-    if(!row)return;
-    let btn=document.getElementById('homeSignOutBtn');
-    if(!btn){
-      btn=document.createElement('button');
-      btn.id='homeSignOutBtn';
-      btn.type='button';
-      btn.className='btn btn-secondary hidden';
-      btn.textContent='Cerrar sesión';
-      btn.title='Salir de Cecilia Comercial';
-      btn.addEventListener('click',doSignOut);
-      row.appendChild(btn);
-    }
-  }
-
-  function paintSessionButtons(){
-    ensureTopSessionButtons();
-    ensureHomeSignOut();
+  function paintSessionButton(){
+    ensureTopSessionButton();
     const signed=isSigned();
     const login=document.getElementById('cloudBtn');
     const signOut=document.getElementById('topSignOutBtn');
-    const homeSignOut=document.getElementById('homeSignOutBtn');
 
     if(login){
       login.textContent='Iniciar sesión';
@@ -58,15 +41,13 @@
       login.onclick=()=>openAuthModal();
     }
     if(signOut)signOut.classList.toggle('hidden',!signed);
-    if(homeSignOut)homeSignOut.classList.toggle('hidden',!signed);
   }
 
   document.addEventListener('DOMContentLoaded',()=>{
-    ensureTopSessionButtons();
-    ensureHomeSignOut();
-    paintSessionButtons();
-    setTimeout(paintSessionButtons,250);
-    setTimeout(paintSessionButtons,1000);
+    ensureTopSessionButton();
+    paintSessionButton();
+    setTimeout(paintSessionButton,250);
+    setTimeout(paintSessionButton,1000);
   });
 
   const wrap=()=>{
@@ -74,9 +55,9 @@
     const original=updateAuthUi;
     updateAuthUi=function(){
       original();
-      setTimeout(paintSessionButtons,0);
+      setTimeout(paintSessionButton,0);
     };
-    paintSessionButtons();
+    paintSessionButton();
     return true;
   };
 
