@@ -1,5 +1,5 @@
-const CACHE='cecilia-v13';
-const CORE=['./','./index.html','./styles.css','./app.js','./validationfix.js','./session-ui.js','./manifest.webmanifest'];
+const CACHE='cecilia-v14';
+const CORE=['./','./index.html','./styles.css','./app.js','./validationfix.js','./session-ui.js','./auth-help.js','./manifest.webmanifest'];
 
 self.addEventListener('install',event=>{
   self.skipWaiting();
@@ -35,6 +35,7 @@ async function navigationResponse(request){
     const scripts=[];
     if(!html.includes('validationfix.js'))scripts.push('  <script src="validationfix.js"></script>');
     if(!html.includes('session-ui.js'))scripts.push('  <script src="session-ui.js"></script>');
+    if(!html.includes('auth-help.js'))scripts.push('  <script src="auth-help.js"></script>');
     if(scripts.length)html=html.replace('</body>',scripts.join('\n')+'\n</body>');
     return new Response(html,{status:raw.status,statusText:raw.statusText,headers:{'content-type':'text/html; charset=utf-8'}});
   }catch{return raw}
