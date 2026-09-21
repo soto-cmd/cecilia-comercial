@@ -15,13 +15,13 @@
       <div class="brand-mark" aria-label="Cecilia Comercial">CC</div>
     </div>
     <div class="top-actions">
-      <span id="dataBadge" class="data-badge">Comprobando respaldo...</span>
-      <button id="cloudBtn" class="btn btn-ghost" onclick="openAuthModal()">Conectar nube</button>
+      <span id="dataBadge" class="data-badge">Comprobando acceso...</span>
+      <button id="cloudBtn" class="btn btn-ghost" onclick="openAuthModal()">Iniciar sesión</button>
       <button id="installBtn" class="btn btn-ghost hidden">Instalar app</button>
     </div>
   </header>
 
-  <main class="layout">
+  <main class="layout" style="display:none">
     <nav class="sidebar" aria-label="Navegación principal">
       <div class="nav-group-title">Principal</div>
       <button class="nav active" data-view="dashboard"><span class="nav-icon">01</span><span>Inicio</span></button>
@@ -31,7 +31,7 @@
       <div class="nav-group-title nav-group-gap">Gestión</div>
       <button class="nav" data-view="reportes"><span class="nav-icon">05</span><span>Reportes</span></button>
       <button class="nav" data-view="config"><span class="nav-icon">06</span><span>Configuración</span></button>
-      <div class="sidebar-note">Cecilia Comercial v1.4<br><span id="sidebarStorage">Copia local disponible.</span></div>
+      <div class="sidebar-note">Cecilia Comercial v2.0<br><span id="sidebarStorage">Acceso seguro y sincronización local-first.</span></div>
     </nav>
 
     <section class="content">
@@ -56,28 +56,25 @@
 
       <section id="config" class="view">
         <div class="page-head"><div><span class="eyebrow">Sistema</span><h2>Configuración</h2><p>Respaldo, exportación y seguridad de datos.</p></div></div>
-        <article class="panel"><div class="panel-head"><div><h3>Respaldo en la nube</h3><p id="cloudStatusText">Conectá una cuenta para guardar los datos fuera del dispositivo y sincronizarlos entre equipos.</p></div></div><div class="button-row"><button id="configCloudBtn" class="btn btn-primary" onclick="openAuthModal()">Conectar respaldo</button><button id="restoreCloudBtn" class="btn btn-secondary hidden" onclick="restoreLatestCloudBackup()">Restaurar última copia</button><button id="signOutBtn" class="btn btn-secondary hidden" onclick="signOutCloud()">Cerrar sesión</button></div></article>
+        <article class="panel"><div class="panel-head"><div><h3>Respaldo en la nube</h3><p id="cloudStatusText">La información se guarda primero en este equipo y luego se sincroniza de forma segura.</p></div></div><div class="button-row"><button id="configCloudBtn" class="btn btn-primary" onclick="openAuthModal()">Iniciar sesión</button><button id="restoreCloudBtn" class="btn btn-secondary hidden" onclick="restoreLatestCloudBackup()">Restaurar última copia</button><button id="signOutBtn" class="btn btn-secondary hidden" onclick="signOutCloud()">Cerrar sesión</button></div></article>
         <article class="panel"><div class="panel-head"><div><h3>Exportar y respaldar</h3><p>Mantené también una copia externa descargable.</p></div></div><div class="button-row"><button class="btn btn-primary" onclick="exportExcel()">Exportar a Excel</button><button class="btn btn-secondary" onclick="exportData()">Respaldo JSON</button><label class="btn btn-secondary file-btn">Importar respaldo<input type="file" id="importFile" accept="application/json" hidden /></label></div></article>
-        <article class="panel danger-panel"><div class="panel-head"><div><h3>Zona de seguridad</h3><p>La eliminación total requiere confirmaciones adicionales. Si estás conectado, se crea una copia recuperable en la nube antes de borrar.</p></div></div><button class="btn btn-danger" onclick="resetData()">Borrar todos los datos</button></article>
+        <article class="panel danger-panel"><div class="panel-head"><div><h3>Zona de seguridad</h3><p>La eliminación total requiere confirmaciones adicionales y usa borrado persistente para evitar que los datos reaparezcan.</p></div></div><button class="btn btn-danger" onclick="resetData()">Borrar todos los datos</button></article>
       </section>
 
       <section id="clientDetail" class="view"><div class="page-head"><div><button class="link-btn" onclick="goView('clientes')">← Volver a clientes</button><span class="eyebrow">Cuenta corriente</span><h2 id="detailName">Cliente</h2><p id="detailMeta"></p></div><div class="button-row"><button class="btn btn-secondary" onclick="openDebtModal(currentClientId)">+ Deuda</button><button class="btn btn-primary" onclick="openPaymentModal(currentClientId)">+ Pago</button></div></div><div class="cards report-grid"><article class="card kpi-card"><span class="kpi-label">Deuda registrada</span><strong id="detailDebt">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Pagado</span><strong id="detailPaid">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Saldo</span><strong id="detailBalance">Gs. 0</strong></article></div><article class="panel"><div class="panel-head"><div><h3>Movimientos de la cuenta</h3><p>Cargos y abonos en orden cronológico</p></div></div><div class="table-wrap embedded"><table><thead><tr><th>Fecha</th><th>Movimiento</th><th>Detalle</th><th>Cargo</th><th>Abono</th><th>Saldo</th></tr></thead><tbody id="detailLedger"></tbody></table></div></article></section>
     </section>
   </main>
 
-  <dialog id="clientModal"><form method="dialog" id="clientForm"><div class="modal-head"><span class="eyebrow">Clientes</span><h3>Nuevo cliente</h3></div><label>Nombre completo<input required id="cName" autocomplete="name" /></label><label>Cédula / RUC<input id="cDoc" /></label><label>Teléfono<input id="cPhone" placeholder="0981..." inputmode="tel" /></label><label>Dirección<input id="cAddress" /></label><label>Observaciones<textarea id="cNotes"></textarea></label><div class="modal-actions"><button type="button" class="btn btn-secondary" onclick="this.closest('dialog').close()">Cancelar</button><button value="default" class="btn btn-primary" id="saveClientBtn">Guardar cliente</button></div></form></dialog>
+  <dialog id="clientModal"><form method="dialog" id="clientForm"><div class="modal-head"><span class="eyebrow">Clientes</span><h3>Nuevo cliente</h3></div><label>Nombre completo<input required id="cName" autocomplete="name" /></label><label>Cédula / RUC<input id="cDoc" /></label><label>Teléfono<input id="cPhone" placeholder="0981..." inputmode="tel" /></label><label>Dirección<input id="cAddress" /></label><label>Observaciones<textarea id="cNotes"></textarea></label><div class="modal-actions"><button type="button" class="btn btn-secondary" onclick="this.closest('dialog').close()">Cancelar</button><button type="button" class="btn btn-primary" id="saveClientBtn">Guardar cliente</button></div></form></dialog>
 
-  <dialog id="debtModal"><form method="dialog" id="debtForm"><div class="modal-head"><span class="eyebrow">Cuentas por cobrar</span><h3>Registrar deuda</h3></div><label>Cliente<select required id="dClient"></select></label><label>Concepto<input required id="dConcept" /></label><label>Monto (Gs.)<input required type="number" min="1" step="1" id="dAmount" inputmode="numeric" /></label><label>Fecha<input required type="date" id="dDate" /></label><label>Vencimiento<input type="date" id="dDue" /></label><div class="modal-actions"><button type="button" class="btn btn-secondary" onclick="this.closest('dialog').close()">Cancelar</button><button value="default" class="btn btn-primary" id="saveDebtBtn">Guardar deuda</button></div></form></dialog>
+  <dialog id="debtModal"><form method="dialog" id="debtForm"><div class="modal-head"><span class="eyebrow">Cuentas por cobrar</span><h3>Registrar deuda</h3></div><label>Cliente<select required id="dClient"></select></label><label>Concepto<input required id="dConcept" /></label><label>Monto (Gs.)<input required type="number" min="1" step="1" id="dAmount" inputmode="numeric" /></label><label>Fecha<input required type="date" id="dDate" /></label><label>Vencimiento<input type="date" id="dDue" /></label><div class="modal-actions"><button type="button" class="btn btn-secondary" onclick="this.closest('dialog').close()">Cancelar</button><button type="button" class="btn btn-primary" id="saveDebtBtn">Guardar deuda</button></div></form></dialog>
 
-  <dialog id="paymentModal"><form method="dialog" id="paymentForm"><div class="modal-head"><span class="eyebrow">Cobranzas</span><h3>Registrar pago</h3></div><label>Cliente<select required id="pClient"></select></label><label>Monto (Gs.)<input required type="number" min="1" step="1" id="pAmount" inputmode="numeric" /></label><label>Fecha<input required type="date" id="pDate" /></label><label>Medio de pago<select id="pMethod"><option>Efectivo</option><option>Transferencia</option><option>QR</option><option>Otro</option></select></label><label>Referencia<input id="pRef" /></label><div class="modal-actions"><button type="button" class="btn btn-secondary" onclick="this.closest('dialog').close()">Cancelar</button><button value="default" class="btn btn-primary" id="savePaymentBtn">Guardar pago</button></div></form></dialog>
+  <dialog id="paymentModal"><form method="dialog" id="paymentForm"><div class="modal-head"><span class="eyebrow">Cobranzas</span><h3>Registrar pago</h3></div><label>Cliente<select required id="pClient"></select></label><label>Monto (Gs.)<input required type="number" min="1" step="1" id="pAmount" inputmode="numeric" /></label><label>Fecha<input required type="date" id="pDate" /></label><label>Medio de pago<select id="pMethod"><option>Efectivo</option><option>Transferencia</option><option>QR</option><option>Otro</option></select></label><label>Referencia<input id="pRef" /></label><div class="modal-actions"><button type="button" class="btn btn-secondary" onclick="this.closest('dialog').close()">Cancelar</button><button type="button" class="btn btn-primary" id="savePaymentBtn">Guardar pago</button></div></form></dialog>
 
-  <dialog id="authModal"><form method="dialog" id="authForm"><div class="modal-head"><span class="eyebrow">Respaldo seguro</span><h3>Cuenta de Cecilia</h3><p>Usá tu correo y una contraseña. Esta cuenta protege y sincroniza tus datos entre dispositivos.</p></div><label>Correo electrónico<input required type="email" id="authEmail" autocomplete="email" /></label><label>Contraseña<input required type="password" minlength="6" id="authPassword" autocomplete="current-password" /></label><div class="modal-actions"><button type="button" class="btn btn-secondary" onclick="this.closest('dialog').close()">Cancelar</button><button type="button" class="btn btn-secondary" onclick="signUpCloud()">Crear cuenta</button><button type="button" class="btn btn-primary" onclick="signInCloud()">Iniciar sesión</button></div></form></dialog>
+  <dialog id="authModal"><form method="dialog" id="authForm"><div class="modal-head"><span class="eyebrow">Acceso privado</span><h3>Cuenta de Cecilia</h3><p>Solo los correos autorizados pueden crear una cuenta y acceder a los datos compartidos.</p></div><label>Correo electrónico<input required type="email" id="authEmail" autocomplete="email" /></label><label>Contraseña<input required type="password" minlength="6" id="authPassword" autocomplete="current-password" /></label><div class="modal-actions"><button type="button" class="btn btn-secondary" onclick="this.closest('dialog').close()">Cancelar</button><button type="button" class="btn btn-secondary" onclick="signUpCloud()">Crear cuenta</button><button type="button" class="btn btn-primary" onclick="signInCloud()">Iniciar sesión</button></div></form></dialog>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="app.js"></script>
-  <script src="privacy.js"></script>
-  <script src="crud.js"></script>
-  <script src="cloudfix.js"></script>
 </body>
 </html>
