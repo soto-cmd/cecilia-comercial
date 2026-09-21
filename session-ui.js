@@ -11,9 +11,7 @@
     return hasGreeting();
   };
 
-  const doSignOut=()=>{
-    if(confirm('¿Querés cerrar la sesión de Cecilia Comercial?')) signOutCloud();
-  };
+  const doSignOut=()=>signOutCloud();
 
   function ensureTopSessionButtons(){
     const actions=document.querySelector('.top-actions');
