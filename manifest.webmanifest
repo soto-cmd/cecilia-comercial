@@ -1,14 +1,16 @@
 {
+  "id": "/cecilia-comercial/",
   "name": "Cecilia Comercial",
   "short_name": "Cecilia",
-  "start_url": "./",
+  "description": "Gestión de clientes, deudas y pagos",
+  "start_url": "/cecilia-comercial/?source=pwa",
+  "scope": "/cecilia-comercial/",
   "display": "standalone",
   "background_color": "#0a0a0a",
   "theme_color": "#0a0a0a",
-  "description": "Gestión de clientes, deudas y pagos",
   "icons": [
     {
-      "src": "favicon.svg",
+      "src": "./favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
