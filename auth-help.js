@@ -1,110 +1,20 @@
 (()=>{
   function enhanceAuthModal(){
-    const modal=document.getElementById('authModal');
-    const form=document.getElementById('authForm');
-    if(!modal||!form)return;
-
-    modal.style.maxWidth='640px';
-    const head=form.querySelector('.modal-head');
-    const intro=head?.querySelector('p');
-    if(intro){
-      intro.innerHTML='<strong>Acceso exclusivo para usuarios autorizados.</strong> Elegí la opción que corresponda:';
-      intro.style.marginBottom='14px';
-    }
-
-    let guide=document.getElementById('authGuide');
-    if(!guide&&head){
-      guide=document.createElement('div');
-      guide.id='authGuide';
-      guide.style.cssText='display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:14px 0 18px';
-      guide.innerHTML=`
-        <div style="border:1px solid #e6c24a;background:#fff8df;border-radius:12px;padding:12px 14px;line-height:1.45">
-          <strong style="display:block;margin-bottom:5px">Primera vez</strong>
-          <span style="font-size:13px;color:#4b5563">1. Ingresá tu correo autorizado.<br>2. Creá una contraseña de <strong>mínimo 6 caracteres</strong>.<br>3. Tocá <strong>Crear mi cuenta</strong> una sola vez.<br>4. Si recibís un correo de confirmación, abrilo antes de iniciar sesión.</span>
-        </div>
-        <div style="border:1px solid #e5e7eb;background:#f9fafb;border-radius:12px;padding:12px 14px;line-height:1.45">
-          <strong style="display:block;margin-bottom:5px">Ya tengo cuenta</strong>
-          <span style="font-size:13px;color:#4b5563">Ingresá el mismo correo y contraseña que registraste anteriormente y tocá <strong>Iniciar sesión</strong>. No vuelvas a crear la cuenta.</span>
-        </div>`;
-      head.appendChild(guide);
-    }
-
-    const email=document.getElementById('authEmail');
-    if(email){email.placeholder='ejemplo@correo.com';email.autocapitalize='none';email.spellcheck=false}
-
-    const pass=document.getElementById('authPassword');
-    if(pass){
-      pass.minLength=6;
-      pass.placeholder='Mínimo 6 caracteres';
-      pass.setAttribute('aria-describedby','authPasswordHelp');
-      let help=document.getElementById('authPasswordHelp');
-      if(!help){
-        help=document.createElement('div');
-        help.id='authPasswordHelp';
-        help.style.cssText='display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:6px;flex-wrap:wrap';
-        help.innerHTML='<small style="color:#6b7280;font-size:12px">Mínimo 6 caracteres. Recomendado: 8 o más.</small><button type="button" id="toggleAuthPassword" style="border:0;background:transparent;color:#9a7200;font-weight:700;cursor:pointer;padding:2px 0">Mostrar contraseña</button>';
-        pass.insertAdjacentElement('afterend',help);
-        document.getElementById('toggleAuthPassword')?.addEventListener('click',e=>{
-          const showing=pass.type==='text';pass.type=showing?'password':'text';e.currentTarget.textContent=showing?'Mostrar contraseña':'Ocultar contraseña';
-        });
-      }
-    }
-
-    const actions=form.querySelector('.modal-actions');
-    if(actions){actions.style.flexWrap='wrap';actions.style.gap='10px'}
-    const createBtn=[...form.querySelectorAll('button')].find(b=>['Crear cuenta','Crear mi cuenta'].includes(b.textContent.trim()));
-    if(createBtn){createBtn.textContent='Crear mi cuenta';createBtn.title='Usar solo la primera vez para crear tu acceso'}
-    const loginBtn=[...form.querySelectorAll('button')].find(b=>b.textContent.trim()==='Iniciar sesión');
-    if(loginBtn)loginBtn.title='Usar si ya creaste tu cuenta anteriormente';
+    const modal=document.getElementById('authModal'),form=document.getElementById('authForm');if(!modal||!form)return;
+    modal.style.maxWidth='640px';const head=form.querySelector('.modal-head'),intro=head?.querySelector('p');
+    if(intro){intro.innerHTML='<strong>Acceso exclusivo para usuarios autorizados.</strong> Elegí la opción que corresponda:';intro.style.marginBottom='14px'}
+    let guide=document.getElementById('authGuide');if(!guide&&head){guide=document.createElement('div');guide.id='authGuide';guide.style.cssText='display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:14px 0 18px';guide.innerHTML=`<div style="border:1px solid #e6c24a;background:#fff8df;border-radius:12px;padding:12px 14px;line-height:1.45"><strong style="display:block;margin-bottom:5px">Primera vez</strong><span style="font-size:13px;color:#4b5563">1. Ingresá tu correo autorizado.<br>2. Creá una contraseña de <strong>mínimo 6 caracteres</strong>.<br>3. Tocá <strong>Crear mi cuenta</strong> una sola vez.<br>4. Si recibís un correo de confirmación, abrilo antes de iniciar sesión.</span></div><div style="border:1px solid #e5e7eb;background:#f9fafb;border-radius:12px;padding:12px 14px;line-height:1.45"><strong style="display:block;margin-bottom:5px">Ya tengo cuenta</strong><span style="font-size:13px;color:#4b5563">Ingresá el mismo correo y contraseña que registraste anteriormente y tocá <strong>Iniciar sesión</strong>. No vuelvas a crear la cuenta.</span></div>`;head.appendChild(guide)}
+    const email=document.getElementById('authEmail');if(email){email.placeholder='ejemplo@correo.com';email.autocapitalize='none';email.spellcheck=false}
+    const pass=document.getElementById('authPassword');if(pass){pass.minLength=6;pass.placeholder='Mínimo 6 caracteres';pass.setAttribute('aria-describedby','authPasswordHelp');let help=document.getElementById('authPasswordHelp');if(!help){help=document.createElement('div');help.id='authPasswordHelp';help.style.cssText='display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:6px;flex-wrap:wrap';help.innerHTML='<small style="color:#6b7280;font-size:12px">Mínimo 6 caracteres. Recomendado: 8 o más.</small><button type="button" id="toggleAuthPassword" style="border:0;background:transparent;color:#9a7200;font-weight:700;cursor:pointer;padding:2px 0">Mostrar contraseña</button>';pass.insertAdjacentElement('afterend',help);document.getElementById('toggleAuthPassword')?.addEventListener('click',e=>{const showing=pass.type==='text';pass.type=showing?'password':'text';e.currentTarget.textContent=showing?'Mostrar contraseña':'Ocultar contraseña'})}}
+    const actions=form.querySelector('.modal-actions');if(actions){actions.style.flexWrap='wrap';actions.style.gap='10px'}
+    const createBtn=[...form.querySelectorAll('button')].find(b=>['Crear cuenta','Crear mi cuenta'].includes(b.textContent.trim()));if(createBtn){createBtn.textContent='Crear mi cuenta';createBtn.title='Usar solo la primera vez para crear tu acceso'}
+    const loginBtn=[...form.querySelectorAll('button')].find(b=>b.textContent.trim()==='Iniciar sesión');if(loginBtn)loginBtn.title='Usar si ya creaste tu cuenta anteriormente';
   }
-
-  function friendlyAuthError(error,action){
-    const msg=String(error?.message||'').toLowerCase();
-    if(msg.includes('email rate limit')||msg.includes('rate limit'))return 'Supabase alcanzó temporalmente el límite de correos de confirmación. No sigas presionando “Crear mi cuenta”. Si ya la creaste, probá “Iniciar sesión”. Si todavía falta confirmar el correo, esperá unos minutos antes de volver a intentarlo.';
-    if(msg.includes('already registered')||msg.includes('already been registered')||msg.includes('user already'))return 'Ese correo ya tiene una cuenta. Usá “Iniciar sesión” en lugar de crearla nuevamente.';
-    if(msg.includes('invalid login credentials'))return 'Correo o contraseña incorrectos. Si es tu primera vez y aún no creaste la cuenta, usá “Crear mi cuenta”.';
-    if(msg.includes('email not confirmed'))return 'La cuenta existe, pero falta confirmar el correo. Revisá la bandeja de entrada y spam.';
-    return `No se pudo ${action}: ${error?.message||'error desconocido'}`;
-  }
-
+  function friendlyAuthError(error,action){const msg=String(error?.message||'').toLowerCase();if(msg.includes('email rate limit')||msg.includes('rate limit'))return 'Se alcanzó temporalmente el límite de correos de confirmación. No sigas presionando “Crear mi cuenta”. Si ya la creaste, probá “Iniciar sesión”. Si todavía falta confirmar el correo, esperá unos minutos antes de volver a intentarlo.';if(msg.includes('already registered')||msg.includes('already been registered')||msg.includes('user already'))return 'Ese correo ya tiene una cuenta. Usá “Iniciar sesión” en lugar de crearla nuevamente.';if(msg.includes('invalid login credentials'))return 'Correo o contraseña incorrectos. Si es tu primera vez y aún no creaste la cuenta, usá “Crear mi cuenta”.';if(msg.includes('email not confirmed'))return 'La cuenta existe, pero falta confirmar el correo. Revisá la bandeja de entrada y spam.';return `No se pudo ${action}: ${error?.message||'error desconocido'}`}
   function installAuthFix(){
-    if(!window.sb||!window.el)return;
-    window.signUpCloud=async function(){
-      if(!navigator.onLine||!sb)return alert('Necesitás conexión a internet para crear la cuenta.');
-      const email=el('authEmail').value.trim().toLowerCase(),password=el('authPassword').value;
-      if(!email||password.length<6)return alert('Ingresá un correo válido y una contraseña de al menos 6 caracteres.');
-      const btn=[...document.querySelectorAll('#authForm button')].find(b=>b.textContent.trim()==='Crear mi cuenta');
-      if(btn?.disabled)return;
-      if(btn){btn.disabled=true;btn.dataset.oldText=btn.textContent;btn.textContent='Creando...'}
-      try{
-        const allowed=await sb.rpc('cecilia_email_is_allowed',{p_email:email});
-        if(allowed.error||allowed.data!==true)return alert('Este correo no está autorizado para crear una cuenta de Cecilia Comercial.');
-        const {data,error}=await sb.auth.signUp({email,password});
-        if(error)return alert(friendlyAuthError(error,'crear la cuenta'));
-        if(!data.session){
-          alert('Solicitud recibida. Si la cuenta necesita confirmación, revisá tu correo. No vuelvas a presionar “Crear mi cuenta”; después utilizá “Iniciar sesión”.');
-          return;
-        }
-        window.currentUser=data.user;
-        if(!await resolveWorkspace())return alert('La cuenta fue creada, pero todavía no tiene acceso al espacio de Cecilia.');
-        loadLocal();unlockApp();renderAll();updateAuthUi();el('authModal').close();await syncNow(true);
-      }finally{
-        if(btn){btn.disabled=false;btn.textContent=btn.dataset.oldText||'Crear mi cuenta'}
-      }
-    };
-
-    window.signInCloud=async function(){
-      if(!navigator.onLine||!sb)return alert('Necesitás conexión a internet para iniciar sesión.');
-      const email=el('authEmail').value.trim().toLowerCase(),password=el('authPassword').value;
-      if(!email||password.length<6)return alert('Ingresá un correo válido y una contraseña de al menos 6 caracteres.');
-      const {data,error}=await sb.auth.signInWithPassword({email,password});
-      if(error)return alert(friendlyAuthError(error,'iniciar sesión'));
-      window.currentUser=data.user;
-      if(!await resolveWorkspace()){await sb.auth.signOut();window.currentUser=null;window.workspaceId=null;return alert('Esta cuenta no está autorizada para Cecilia Comercial.');}
-      loadLocal();unlockApp();renderAll();updateAuthUi();el('authModal').close();await syncNow(true);
-    };
+    try{if(typeof sb==='undefined'||typeof el==='undefined')return}catch{return}
+    signUpCloud=async function(){if(!navigator.onLine||!sb)return alert('Necesitás conexión a internet para crear la cuenta.');const email=el('authEmail').value.trim().toLowerCase(),password=el('authPassword').value;if(!email||password.length<6)return alert('Ingresá un correo válido y una contraseña de al menos 6 caracteres.');const btn=[...document.querySelectorAll('#authForm button')].find(b=>b.textContent.trim()==='Crear mi cuenta');if(btn?.disabled)return;if(btn){btn.disabled=true;btn.dataset.oldText=btn.textContent;btn.textContent='Creando...'}try{const allowed=await sb.rpc('cecilia_email_is_allowed',{p_email:email});if(allowed.error||allowed.data!==true)return alert('Este correo no está autorizado para crear una cuenta de Cecilia Comercial.');const {data,error}=await sb.auth.signUp({email,password});if(error)return alert(friendlyAuthError(error,'crear la cuenta'));if(!data.session){alert('Solicitud recibida. Si la cuenta necesita confirmación, revisá tu correo. No vuelvas a presionar “Crear mi cuenta”; después utilizá “Iniciar sesión”.');return}currentUser=data.user;if(!await resolveWorkspace())return alert('La cuenta fue creada, pero todavía no tiene acceso al espacio de Cecilia.');loadLocal();unlockApp();renderAll();updateAuthUi();el('authModal').close();await syncNow(true)}finally{if(btn){btn.disabled=false;btn.textContent=btn.dataset.oldText||'Crear mi cuenta'}}};
+    signInCloud=async function(){if(!navigator.onLine||!sb)return alert('Necesitás conexión a internet para iniciar sesión.');const email=el('authEmail').value.trim().toLowerCase(),password=el('authPassword').value;if(!email||password.length<6)return alert('Ingresá un correo válido y una contraseña de al menos 6 caracteres.');const {data,error}=await sb.auth.signInWithPassword({email,password});if(error)return alert(friendlyAuthError(error,'iniciar sesión'));currentUser=data.user;if(!await resolveWorkspace()){await sb.auth.signOut();currentUser=null;workspaceId=null;return alert('Esta cuenta no está autorizada para Cecilia Comercial.')}loadLocal();unlockApp();renderAll();updateAuthUi();el('authModal').close();await syncNow(true)};
   }
-
-  document.addEventListener('DOMContentLoaded',()=>{enhanceAuthModal();setTimeout(installAuthFix,0)});
-  setTimeout(()=>{enhanceAuthModal();installAuthFix()},500);
+  document.addEventListener('DOMContentLoaded',()=>{enhanceAuthModal();setTimeout(installAuthFix,0)});setTimeout(()=>{enhanceAuthModal();installAuthFix()},500);
 })();
