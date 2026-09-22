@@ -1,5 +1,5 @@
-const CACHE='cecilia-v18';
-const CORE=['./','./index.html','./styles.css','./app.js','./validationfix.js','./session-ui.js','./auth-help.js','./manifest.webmanifest'];
+const CACHE='cecilia-v19';
+const CORE=['./','./index.html','./styles.css','./app.js','./validationfix.js','./session-ui.js','./auth-help.js','./manifest.webmanifest','./favicon.svg'];
 
 self.addEventListener('install',event=>{
   self.skipWaiting();
@@ -27,18 +27,8 @@ async function networkFirst(request,fallback){
 
 async function navigationResponse(request){
   const raw=await networkFirst(request,'./index.html');
-  if(!raw)return raw;
-  try{
-    const type=raw.headers.get('content-type')||'';
-    if(!type.includes('text/html'))return raw;
-    let html=await raw.text();
-    const scripts=[];
-    if(!html.includes('validationfix.js'))scripts.push('  <script src="validationfix.js"></script>');
-    if(!html.includes('session-ui.js'))scripts.push('  <script src="session-ui.js"></script>');
-    if(!html.includes('auth-help.js'))scripts.push('  <script src="auth-help.js"></script>');
-    if(scripts.length)html=html.replace('</body>',scripts.join('\n')+'\n</body>');
-    return new Response(html,{status:raw.status,statusText:raw.statusText,headers:{'content-type':'text/html; charset=utf-8'}});
-  }catch{return raw}
+  if(!raw)return new Response('Cecilia Comercial no está disponible sin conexión todavía.',{status:503,headers:{'content-type':'text/plain; charset=utf-8'}});
+  return raw;
 }
 
 self.addEventListener('fetch',event=>{
@@ -63,6 +53,6 @@ self.addEventListener('fetch',event=>{
       const response=await fetch(request);
       if(response&&response.ok){const cache=await caches.open(CACHE);await cache.put(request,response.clone())}
       return response;
-    }catch(err){return cached}
+    }catch(err){return cached||new Response('',{status:504})}
   })());
 });
