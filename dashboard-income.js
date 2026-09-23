@@ -48,10 +48,17 @@
   renderAll=function(){previousRenderAll();renderIncomeDashboard()};
   document.addEventListener('DOMContentLoaded',renderIncomeDashboard);
 
-  // Integridad: las deudas generadas por una venta a crédito se administran desde la venta.
+  function linkedSaleByDebt(did){return active(state.sales||[]).find(v=>v.type==='Crédito'&&v.debtId===did)}
+  function paidOnLinkedSale(sale){
+    if(!sale?.debtId)return 0;
+    const debt=state.debts.find(d=>d.id===sale.debtId&&!d.deletedAt);if(!debt)return 0;
+    return Math.max(0,Number(debt.amount||0)-Number(debtRemaining(debt)||0));
+  }
+
+  // Las deudas generadas por ventas a crédito se administran desde la venta original.
   const originalEditDebt=editDebt;
   editDebt=function(did){
-    const sale=active(state.sales||[]).find(v=>v.type==='Crédito'&&v.debtId===did);
+    const sale=linkedSaleByDebt(did);
     if(sale){
       alert('Esta deuda está vinculada a una venta a crédito. Para mantener los datos consistentes, editá la venta original.');
       return window.editSale?.(sale.id);
@@ -61,11 +68,46 @@
 
   const originalDeleteDebt=deleteDebt;
   deleteDebt=function(did){
-    const sale=active(state.sales||[]).find(v=>v.type==='Crédito'&&v.debtId===did);
+    const sale=linkedSaleByDebt(did);
     if(sale){
-      alert('Esta deuda pertenece a una venta a crédito. Si necesitás eliminarla, se eliminará desde la venta original para no dejar movimientos huérfanos.');
+      alert('Esta deuda pertenece a una venta a crédito. Si necesitás eliminarla, se gestionará desde la venta original para no dejar movimientos huérfanos.');
       return window.deleteSale?.(sale.id);
     }
     return originalDeleteDebt(did);
   };
+
+  // Seguimiento del registro que se está editando para proteger ventas ya cobradas.
+  let protectedEditingSaleId=null;
+  const originalOpenSale=window.openSaleModal;
+  window.openSaleModal=function(cid=null){protectedEditingSaleId=null;return originalOpenSale?.(cid)};
+  const originalEditSale=window.editSale;
+  window.editSale=function(sid){protectedEditingSaleId=sid;return originalEditSale?.(sid)};
+
+  const originalDeleteSale=window.deleteSale;
+  window.deleteSale=function(sid){
+    const sale=(state.sales||[]).find(v=>v.id===sid&&!v.deletedAt);
+    const paid=paidOnLinkedSale(sale);
+    if(paid>0){
+      return alert(`Esta venta ya tiene ${money(paid)} cobrado. Para evitar saldos e ingresos incorrectos, primero revertí/eliminá el cobro correspondiente y luego eliminá la venta.`);
+    }
+    return originalDeleteSale?.(sid);
+  };
+
+  document.addEventListener('DOMContentLoaded',()=>{
+    const btn=document.getElementById('saveSaleBtn');if(!btn)return;
+    btn.addEventListener('click',e=>{
+      if(!protectedEditingSaleId)return;
+      const sale=(state.sales||[]).find(v=>v.id===protectedEditingSaleId&&!v.deletedAt);if(!sale||sale.type!=='Crédito')return;
+      const paid=paidOnLinkedSale(sale);if(!(paid>0))return;
+      const newClient=document.getElementById('sClient')?.value||'';
+      const newAmount=Number(document.getElementById('sAmount')?.value||0);
+      const newDate=document.getElementById('sDate')?.value||'';
+      const newType=document.getElementById('sType')?.value||'';
+      const protectedChange=newClient!==sale.clientId||newDate!==sale.date||newType!=='Crédito'||newAmount<paid;
+      if(protectedChange){
+        e.preventDefault();e.stopImmediatePropagation();
+        alert(`Esta venta ya tiene ${money(paid)} cobrado. Podés corregir el concepto, vencimiento o aumentar el monto, pero no cambiar cliente, fecha, pasarla a contado ni reducir el monto por debajo de lo ya cobrado. Para hacerlo, primero revertí el cobro.`);
+      }
+    },true);
+  });
 })();
