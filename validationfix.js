@@ -20,3 +20,5 @@
     return nativeAlert(message);
   };
 })();
+
+document.write('<script src="sales.js"><\/script>');
