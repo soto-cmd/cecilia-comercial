@@ -43,7 +43,29 @@
     const box=document.getElementById('incomeHistory');if(!box)return;
     box.innerHTML=`<div style="display:grid;gap:10px">${data.map(x=>`<div style="display:grid;grid-template-columns:minmax(76px,110px) 1fr minmax(110px,150px);gap:12px;align-items:center"><span style="font-size:13px;color:#64748b;text-transform:capitalize">${monthLabel(x.m)}</span><div style="height:10px;background:#f1ead7;border-radius:999px;overflow:hidden"><div style="height:100%;width:${Math.max(x.total?3:0,(x.total/max)*100)}%;background:#c9a227;border-radius:999px"></div></div><strong style="text-align:right">${money(x.total)}</strong></div>`).join('')}</div><p style="margin:14px 0 0;color:#64748b;font-size:12px">Cálculo: ventas al contado + pagos/cobros registrados en el mes. Las ventas a crédito no se cuentan como ingreso hasta que se cobran.</p>`;
   }
+
   const previousRenderAll=renderAll;
   renderAll=function(){previousRenderAll();renderIncomeDashboard()};
   document.addEventListener('DOMContentLoaded',renderIncomeDashboard);
+
+  // Integridad: las deudas generadas por una venta a crédito se administran desde la venta.
+  const originalEditDebt=editDebt;
+  editDebt=function(did){
+    const sale=active(state.sales||[]).find(v=>v.type==='Crédito'&&v.debtId===did);
+    if(sale){
+      alert('Esta deuda está vinculada a una venta a crédito. Para mantener los datos consistentes, editá la venta original.');
+      return window.editSale?.(sale.id);
+    }
+    return originalEditDebt(did);
+  };
+
+  const originalDeleteDebt=deleteDebt;
+  deleteDebt=function(did){
+    const sale=active(state.sales||[]).find(v=>v.type==='Crédito'&&v.debtId===did);
+    if(sale){
+      alert('Esta deuda pertenece a una venta a crédito. Si necesitás eliminarla, se eliminará desde la venta original para no dejar movimientos huérfanos.');
+      return window.deleteSale?.(sale.id);
+    }
+    return originalDeleteDebt(did);
+  };
 })();
