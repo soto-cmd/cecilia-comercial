@@ -1,5 +1,5 @@
-const CACHE='cecilia-v19';
-const CORE=['./','./index.html','./styles.css','./app.js','./validationfix.js','./session-ui.js','./auth-help.js','./manifest.webmanifest','./favicon.svg'];
+const CACHE='cecilia-v20';
+const CORE=['./','./index.html','./styles.css','./app.js','./validationfix.js','./sales.js','./session-ui.js','./auth-help.js','./manifest.webmanifest','./favicon.svg'];
 
 self.addEventListener('install',event=>{
   self.skipWaiting();
