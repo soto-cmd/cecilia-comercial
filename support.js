@@ -2,10 +2,18 @@
   'use strict';
   const SUPPORT_EMAIL='l.adrian.soto@gmail.com';
 
+  if(!document.querySelector('script[data-cecilia-icons]')){
+    const iconScript=document.createElement('script');
+    iconScript.src='ui-icons.js';
+    iconScript.dataset.ceciliaIcons='1';
+    document.head.appendChild(iconScript);
+  }
+
   const style=document.createElement('style');
   style.textContent=`
-    #supportButton{position:fixed;right:16px;bottom:16px;z-index:9997;width:46px;height:46px;display:flex;align-items:center;justify-content:center;border:1px solid #c9a227;background:#111;color:#f3df9b;border-radius:50%;padding:0;font-size:20px;line-height:1;font-weight:900;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.22)}
-    #supportButton:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(0,0,0,.28)}
+    #supportButton{position:fixed;right:16px;bottom:16px;z-index:9997;width:46px;height:46px;display:flex;align-items:center;justify-content:center;border:1px solid #c9a227;background:#111;color:#d4af37;border-radius:14px;padding:0;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+    #supportButton svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+    #supportButton:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(0,0,0,.28);border-color:#e0bd4f}
     #supportButton:focus-visible{outline:3px solid rgba(201,162,39,.35);outline-offset:3px}
     #supportDialog{width:min(92vw,540px);border:0;border-radius:16px;padding:0;box-shadow:0 24px 70px rgba(0,0,0,.35)}
     #supportDialog::backdrop{background:rgba(0,0,0,.55)}
@@ -19,7 +27,7 @@
     #supportDialog .support-btn{border:1px solid #d1d5db;background:#fff;border-radius:10px;padding:10px 14px;font-weight:750;cursor:pointer}
     #supportDialog .support-primary{background:#111;color:#f3df9b;border-color:#c9a227}
     #supportStatus{min-height:18px;font-size:13px;font-weight:700;margin-top:10px}
-    @media(max-width:640px){#supportButton{right:10px;bottom:10px;width:42px;height:42px;font-size:18px}}
+    @media(max-width:640px){#supportButton{right:10px;bottom:10px;width:42px;height:42px;border-radius:12px}#supportButton svg{width:21px;height:21px}}
   `;
 
   function getReport(){
@@ -28,12 +36,10 @@
     const steps=document.getElementById('supportSteps').value.trim();
     const active=document.querySelector('.view.active');
     return [
-      'REPORTE DE SOPORTE - CECILIA COMERCIAL',
-      '',
+      'REPORTE DE SOPORTE - CECILIA COMERCIAL','',
       `Tipo: ${type}`,
       `Descripción: ${description}`,
-      `Qué estaba haciendo: ${steps||'No informado'}`,
-      '',
+      `Qué estaba haciendo: ${steps||'No informado'}`,'',
       `Fecha y hora: ${new Date().toLocaleString('es-PY')}`,
       `Sección: ${active?.id||'No identificada'}`,
       `URL: ${location.href}`,
@@ -80,7 +86,7 @@
     const button=document.createElement('button');
     button.type='button';
     button.id='supportButton';
-    button.textContent='?';
+    button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.4h16v10.4H9.2L5.1 19v-3.2H4z"/><path d="M9.9 9.1a2.3 2.3 0 1 1 3.7 1.8c-.8.6-1.5 1-1.5 2.1M12 15.2h.01"/></svg>';
     button.title='Soporte - Reportar un error';
     button.setAttribute('aria-label','Soporte - Reportar un error');
 
@@ -93,21 +99,11 @@
         <p>Describí lo ocurrido. El reporte agrega automáticamente la sección, fecha, URL y navegador.</p>
         <label>Tipo de problema
           <select id="supportType">
-            <option>Error general</option>
-            <option>No puedo guardar</option>
-            <option>Datos incorrectos o faltantes</option>
-            <option>Problema de acceso</option>
-            <option>Problema de sincronización</option>
-            <option>Problema visual</option>
-            <option>Otro</option>
+            <option>Error general</option><option>No puedo guardar</option><option>Datos incorrectos o faltantes</option><option>Problema de acceso</option><option>Problema de sincronización</option><option>Problema visual</option><option>Otro</option>
           </select>
         </label>
-        <label>¿Qué pasó?
-          <textarea id="supportDescription" maxlength="1500" placeholder="Ej.: Intenté guardar un pago y no respondió..."></textarea>
-        </label>
-        <label>¿Qué estabas haciendo? (opcional)
-          <textarea id="supportSteps" maxlength="1000" placeholder="Ej.: Abrí Pagos, seleccioné cliente y completé el monto..."></textarea>
-        </label>
+        <label>¿Qué pasó?<textarea id="supportDescription" maxlength="1500" placeholder="Ej.: Intenté guardar un pago y no respondió..."></textarea></label>
+        <label>¿Qué estabas haciendo? (opcional)<textarea id="supportSteps" maxlength="1000" placeholder="Ej.: Abrí Pagos, seleccioné cliente y completé el monto..."></textarea></label>
         <div id="supportStatus" role="status" aria-live="polite"></div>
         <div class="support-actions">
           <button type="button" class="support-btn" id="supportCancel">Cancelar</button>
