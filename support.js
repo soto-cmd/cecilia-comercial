@@ -1,5 +1,18 @@
 (()=>{
   'use strict';
+
+  // Carga aditiva del módulo de proveedores e inventario antes de DOMContentLoaded.
+  // Mantenerlo separado permite añadir funciones sin modificar app.js ni sales.js.
+  if(!document.querySelector('script[data-cecilia-inventory]')){
+    if(document.readyState==='loading'){
+      document.write('<script src="inventory.js" data-cecilia-inventory="1"><\/script>');
+    }else{
+      const inventoryScript=document.createElement('script');
+      inventoryScript.src='inventory.js';inventoryScript.dataset.ceciliaInventory='1';inventoryScript.async=false;
+      document.head.appendChild(inventoryScript);
+    }
+  }
+
   const SUPPORT_EMAIL='l.adrian.soto@gmail.com';
 
   if(!document.querySelector('script[data-cecilia-icons]')){
