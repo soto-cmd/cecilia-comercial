@@ -4,7 +4,9 @@
 
   const style=document.createElement('style');
   style.textContent=`
-    #supportButton{position:fixed;right:18px;bottom:18px;z-index:9997;border:1px solid #c9a227;background:#111;color:#f3df9b;border-radius:999px;padding:12px 16px;font-weight:800;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+    #supportButton{position:fixed;right:16px;bottom:16px;z-index:9997;width:46px;height:46px;display:flex;align-items:center;justify-content:center;border:1px solid #c9a227;background:#111;color:#f3df9b;border-radius:50%;padding:0;font-size:20px;line-height:1;font-weight:900;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+    #supportButton:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(0,0,0,.28)}
+    #supportButton:focus-visible{outline:3px solid rgba(201,162,39,.35);outline-offset:3px}
     #supportDialog{width:min(92vw,540px);border:0;border-radius:16px;padding:0;box-shadow:0 24px 70px rgba(0,0,0,.35)}
     #supportDialog::backdrop{background:rgba(0,0,0,.55)}
     #supportDialog .support-wrap{padding:22px}
@@ -17,7 +19,7 @@
     #supportDialog .support-btn{border:1px solid #d1d5db;background:#fff;border-radius:10px;padding:10px 14px;font-weight:750;cursor:pointer}
     #supportDialog .support-primary{background:#111;color:#f3df9b;border-color:#c9a227}
     #supportStatus{min-height:18px;font-size:13px;font-weight:700;margin-top:10px}
-    @media(max-width:640px){#supportButton{right:12px;bottom:12px}}
+    @media(max-width:640px){#supportButton{right:10px;bottom:10px;width:42px;height:42px;font-size:18px}}
   `;
 
   function getReport(){
@@ -78,7 +80,9 @@
     const button=document.createElement('button');
     button.type='button';
     button.id='supportButton';
-    button.textContent='? Soporte';
+    button.textContent='?';
+    button.title='Soporte - Reportar un error';
+    button.setAttribute('aria-label','Soporte - Reportar un error');
 
     const dialog=document.createElement('dialog');
     dialog.id='supportDialog';
