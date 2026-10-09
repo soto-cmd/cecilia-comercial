@@ -88,3 +88,10 @@
 @media(max-width:1280px){#dashboard .kpi-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:700px){#dashboard .kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:410px){#dashboard .kpi-grid{grid-template-columns:1fr}.cc-income-month small{font-size:8px}}
+
+
+/* La leyenda usa exactamente los mismos colores que las barras */
+.cc-legend{display:flex;align-items:center;gap:16px;flex-wrap:wrap;color:#394452;font-size:12px}
+.cc-legend span{display:inline-flex;align-items:center;gap:6px;color:#394452!important;font-weight:600}
+.cc-legend .cc-key{display:inline-block;width:12px;height:12px;border-radius:3px;flex:none}
+.cc-key-cash{background:#5d9f75}.cc-key-credit{background:#8975b8}.cc-key-paid{background:#5999c8}
