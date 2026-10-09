@@ -70,3 +70,21 @@
 @media(max-width:850px){.cc-header-info{gap:8px;padding:0 8px}.cc-header-clock{font-size:10px}.cc-header-weather{font-size:11px;padding-left:8px}}
 @media(max-width:650px){.topbar{height:auto;min-height:82px;flex-wrap:wrap;row-gap:5px;padding-top:8px;padding-bottom:8px}.cc-header-info{order:3;flex:1 0 100%;justify-content:center;padding:3px 0 0}.cc-header-clock{font-size:11px}.cc-header-weather{font-size:12px}}
 @media(max-width:550px){.cc-top-info{grid-template-columns:1fr}}
+
+
+/* Panel general: cinco indicadores alineados y gráfico mensual compacto */
+#dashboard .kpi-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+#dashboard .kpi-grid .kpi-card{min-width:0;padding:16px 13px}
+#dashboard .kpi-grid .kpi-card strong{font-size:clamp(17px,1.65vw,26px);overflow-wrap:anywhere}
+.cc-income-legend{display:flex;gap:20px;flex-wrap:wrap;font-size:11px;font-weight:700;color:#475569;margin:2px 0 6px}
+.cc-income-legend span:nth-child(1){color:#5d9f75}.cc-income-legend span:nth-child(2){color:#5999c8}.cc-income-legend span:nth-child(3){color:#b48b24}
+.cc-income-chart{height:185px;position:relative;overflow:hidden}.cc-income-line{position:absolute;inset:0 0 20px;width:100%;height:145px;z-index:1;pointer-events:none}
+.cc-income-columns{position:absolute;inset:0 0 0;display:flex;justify-content:space-around;gap:4px}
+.cc-income-month{min-width:0;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+.cc-income-pair{height:145px;width:100%;display:flex;align-items:flex-end;justify-content:center;gap:4px;border-bottom:1px solid #e5e7eb}
+.cc-income-pair span{width:min(26%,24px);border-radius:3px 3px 0 0;min-height:0}
+.cc-income-month small{text-align:center;white-space:nowrap;font-size:10px;color:#64748b;margin-top:6px}
+.cc-income-note{margin:10px 0 0;color:#64748b;font-size:11px}
+@media(max-width:1280px){#dashboard .kpi-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){#dashboard .kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:410px){#dashboard .kpi-grid{grid-template-columns:1fr}.cc-income-month small{font-size:8px}}
