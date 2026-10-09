@@ -25,3 +25,17 @@
 #inventoryMovementsTable .btn-danger::before{content:"⚠";font-size:15px;line-height:1;margin-right:6px}
 .row-actions .btn-danger:focus-visible,
 #inventoryMovementsTable .btn-danger:focus-visible{outline:3px solid #d93849;outline-offset:3px}
+
+/* Tarjetas financieras: colores pastel discretos, sin depender del orden. */
+.kpi-card.kpi-income{background:#edf8f0;border-color:#cce6d3}
+.kpi-card.kpi-income::before{background:#5d9f75}
+.kpi-card.kpi-accounts{background:#fff7e9;border-color:#ecddb8}
+.kpi-card.kpi-accounts::before{background:#c49b42}
+.kpi-card.kpi-paid{background:#eef5ff;border-color:#d3e1f2}
+.kpi-card.kpi-paid::before{background:#7096c9}
+.kpi-card.kpi-overdue{background:#fff0f0;border-color:#efd1d1}
+.kpi-card.kpi-overdue::before{background:#cd8383}
+.kpi-card.kpi-clients{background:#f4f0ff;border-color:#e1d8f1}
+.kpi-card.kpi-clients::before{background:#9c83bf}
+.kpi-card[class*="kpi-"]{transition:box-shadow .18s ease,transform .18s ease}
+.kpi-card[class*="kpi-"]:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.07)}
