@@ -45,7 +45,7 @@
     if(!document.getElementById('saleModal')){
       const dlg=document.createElement('dialog');dlg.id='saleModal';
       dlg.innerHTML=`<form method="dialog" id="saleForm"><div class="modal-head"><span class="eyebrow">Ventas</span><h3>Registrar venta</h3></div>
-        <div style="padding:11px 13px;background:#fff8e5;border:1px solid #e7d49d;border-radius:10px;margin-bottom:12px;color:#524421;font-size:13px"><strong>¿Por qué registrar al cliente?</strong><p style="margin:6px 0">Registrar el nombre del cliente facilita el seguimiento de sus compras, mejora la atención y permite analizar las ventas para futuras estrategias comerciales.</p><strong>Opcional para ventas al contado. Obligatorio para ventas a crédito.</strong></div><label>Cliente<select id="sClient"></select></label>
+        <div style="padding:11px 13px;background:#fff8e5;border:1px solid #e7d49d;border-radius:10px;margin-bottom:12px;color:#524421;font-size:13px"><strong><span aria-hidden="true" style="display:inline-block;margin-right:7px;font-size:18px;vertical-align:-2px">💡</span>¿Por qué registrar al cliente?</strong><p style="margin:6px 0">Registrar el nombre del cliente facilita el seguimiento de sus compras, mejora la atención y permite analizar las ventas para futuras estrategias comerciales.</p><strong>Opcional para ventas al contado. Obligatorio para ventas a crédito.</strong></div><label>Cliente<select id="sClient"></select></label>
         <label>Concepto / detalle<input required id="sConcept" placeholder="Ej.: Mercadería, servicio, producto..." /></label>
         <label>Monto (Gs.)<input required type="number" min="1" step="1" id="sAmount" inputmode="numeric" /></label>
         <label>Fecha<input required type="date" id="sDate" /></label>
