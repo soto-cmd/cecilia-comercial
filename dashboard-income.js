@@ -17,7 +17,7 @@
   function ensureIncomeDashboard(){
     const dash=document.getElementById('dashboard');if(!dash)return;
     const cards=dash.querySelector('.kpi-grid');if(cards&&!document.getElementById('kpiIngresoMes')){
-      const card=document.createElement('article');card.className='card kpi-card';
+      const card=document.createElement('article');card.className='card kpi-card kpi-income';
       card.innerHTML='<span class="kpi-label">Ingresos del mes</span><strong id="kpiIngresoMes">Gs. 0</strong><small>Contado + cobros recibidos, sin duplicar ventas a crédito</small>';
       cards.insertBefore(card,cards.firstChild);
     }
@@ -26,9 +26,9 @@
       const panel=document.createElement('article');panel.id='incomeDashboard';panel.className='panel';panel.style.marginBottom='18px';
       panel.innerHTML=`<div class="panel-head"><div><h3>Ingresos mensuales</h3><p>Dinero efectivamente ingresado al negocio</p></div></div>
         <div class="cards report-grid" style="margin-bottom:16px">
-          <article class="card kpi-card"><span class="kpi-label">Ventas al contado</span><strong id="incomeCash">Gs. 0</strong></article>
-          <article class="card kpi-card"><span class="kpi-label">Cobros de créditos/deudas</span><strong id="incomeCollections">Gs. 0</strong></article>
-          <article class="card kpi-card"><span class="kpi-label">Ingreso total</span><strong id="incomeTotal">Gs. 0</strong></article>
+          <article class="card kpi-card kpi-income"><span class="kpi-label">Ventas al contado</span><strong id="incomeCash">Gs. 0</strong></article>
+          <article class="card kpi-card kpi-paid"><span class="kpi-label">Cobros de créditos/deudas</span><strong id="incomeCollections">Gs. 0</strong></article>
+          <article class="card kpi-card kpi-income"><span class="kpi-label">Ingreso total</span><strong id="incomeTotal">Gs. 0</strong></article>
         </div>
         <div id="incomeHistory"></div>`;
       if(grid)dash.insertBefore(panel,grid);else dash.appendChild(panel);
