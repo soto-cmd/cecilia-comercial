@@ -95,3 +95,12 @@
 .cc-legend span{display:inline-flex;align-items:center;gap:6px;color:#394452!important;font-weight:600}
 .cc-legend .cc-key{display:inline-block;width:12px;height:12px;border-radius:3px;flex:none}
 .cc-key-cash{background:#5d9f75}.cc-key-credit{background:#8975b8}.cc-key-paid{background:#5999c8}
+
+
+/* Tendencias mensuales e ítems más frecuentes por concepto */
+.cc-trend-status{font-size:12px;font-weight:700;color:#7e641e;margin:7px 0 0}
+.cc-items-panel{grid-column:1/-1}
+.cc-item-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 3px;border-bottom:1px solid #ece6d9;font-size:13px}
+.cc-item-row>span:first-child{min-width:0;overflow-wrap:anywhere}
+.cc-item-row>span:last-child{text-align:right;white-space:nowrap}
+.cc-item-row small{display:block;font-size:11px;color:#64748b;margin-top:3px}
