@@ -2,6 +2,8 @@
 -- Cambio aditivo: conserva datos, importes, claves y políticas RLS existentes.
 ALTER TABLE public.cecilia_sales ADD COLUMN IF NOT EXISTS notes text;
 ALTER TABLE public.cecilia_debts ADD COLUMN IF NOT EXISTS notes text;
+ALTER TABLE public.cecilia_sales ALTER COLUMN client_id DROP NOT NULL;
+-- Las ventas a crédito siguen exigiendo un cliente desde la interfaz.
 COMMENT ON COLUMN public.cecilia_sales.notes IS 'Notas opcionales de la venta';
 COMMENT ON COLUMN public.cecilia_debts.notes IS 'Notas opcionales de la deuda';
 -- Verificar que public.cecilia_pull_changes devuelva las columnas
