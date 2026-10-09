@@ -60,3 +60,13 @@
 .cc-info-tile a{font-size:11px;color:#947019;text-decoration:underline;text-underline-offset:2px}.cc-convert-fields{display:flex;gap:5px;margin:5px 0}.cc-convert-fields input{width:43%;min-width:0}.cc-convert-fields select{width:57%;min-width:0}.cc-convert-fields input,.cc-convert-fields select{height:32px;border:1px solid #dacaa7;border-radius:6px;padding:4px 6px;font-size:12px}
 @media(max-width:1050px){.cc-top-info{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:550px){.cc-top-info{grid-template-columns:1fr}.cc-info-tile{padding:10px 12px}}
+
+
+/* Fecha/hora y clima: compactos en la barra negra superior */
+.cc-header-info{display:flex;align-items:center;justify-content:center;gap:18px;flex:1;min-width:0;padding:0 18px;color:#f3df9b}
+.cc-header-clock{font-size:12px;font-weight:650;white-space:nowrap;text-transform:capitalize}
+.cc-header-weather{font-size:13px;font-weight:750;white-space:nowrap;border-left:1px solid #6e5c28;padding-left:17px}
+.cc-top-info{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:850px){.cc-header-info{gap:8px;padding:0 8px}.cc-header-clock{font-size:10px}.cc-header-weather{font-size:11px;padding-left:8px}}
+@media(max-width:650px){.topbar{height:auto;min-height:82px;flex-wrap:wrap;row-gap:5px;padding-top:8px;padding-bottom:8px}.cc-header-info{order:3;flex:1 0 100%;justify-content:center;padding:3px 0 0}.cc-header-clock{font-size:11px}.cc-header-weather{font-size:12px}}
+@media(max-width:550px){.cc-top-info{grid-template-columns:1fr}}
