@@ -51,3 +51,12 @@
 .cc-mix{display:flex;height:23px;border-radius:8px;overflow:hidden;background:#f1f5f9;margin:26px 0 20px}.cc-mix~p{padding:8px 0;border-bottom:1px solid #f1f5f9;font-size:13px}
 .cc-rank{margin:14px 0}.cc-rank>div:first-child{display:flex;justify-content:space-between;gap:10px;font-size:12px}.cc-rank b{white-space:nowrap}.cc-track{height:8px;border-radius:8px;background:#f3eee5;margin-top:6px}.cc-track span{display:block;height:100%;background:#b48b42;border-radius:8px}.cc-empty{font-size:13px;color:#64748b;padding:25px 0;text-align:center}
 @media(max-width:850px){.cc-graphs{grid-template-columns:1fr}.cc-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:470px){.cc-stat{padding:10px}.cc-stat strong{font-size:14px}}
+
+
+/* Anillo de ventas y comparación mensual */
+.cc-donut-layout{display:flex;align-items:center;justify-content:center;gap:22px;flex-wrap:wrap;padding:10px 0}
+.cc-donut{width:185px;height:185px;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;flex:none}
+.cc-hole{width:66%;height:66%;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;text-align:center}
+.cc-hole b{font-size:16px;color:#1c2939}.cc-hole small{font-size:11px;color:#64748b}
+.cc-donut-info{font-size:12px;min-width:170px}.cc-donut-info p{display:flex;align-items:center;gap:6px;margin:12px 0}.cc-donut-info i{width:10px;height:10px;display:inline-block;border-radius:3px}
+.cc-monthly-panel{grid-column:1/-1}.cc-monthly-scroll{overflow-x:auto}.cc-monthly-table{width:100%;border-collapse:collapse;min-width:700px}.cc-monthly-table th,.cc-monthly-table td{padding:12px 10px;border-bottom:1px solid #e8e6df;white-space:nowrap;text-align:right}.cc-monthly-table th:first-child,.cc-monthly-table td:first-child{text-align:left}
