@@ -4,3 +4,18 @@
 @media(max-width:1050px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:210px 1fr}.content{padding:24px}.sidebar-note{display:none}}
 @media(max-width:820px){.topbar{height:74px;padding:0 16px}.layout{grid-template-columns:1fr;min-height:calc(100vh - 74px)}.sidebar{display:flex;overflow:auto;border-right:0;border-bottom:1px solid var(--line);padding:8px 10px;position:sticky;top:74px;z-index:15;gap:4px}.nav-group-title,.sidebar-note{display:none}.nav-group-gap{margin:0}.nav{min-width:max-content;margin:0;padding:9px 11px}.nav-icon{display:none}.content{padding:20px}.grid-2{grid-template-columns:1fr}.report-grid{grid-template-columns:1fr 1fr}.page-head{align-items:flex-start;flex-direction:column}.page-head .button-row{width:100%}.page-head .button-row .btn{flex:1}}
 @media(max-width:560px){.brand-mark{width:46px;height:46px;font-size:20px;border-radius:13px}.data-badge{display:none}.content{padding:14px}.kpi-grid,.report-grid{grid-template-columns:1fr}.kpi-card strong{font-size:22px}.page-head h2{font-size:24px}.button-row{width:100%}.button-row .btn,.file-btn{flex:1}.panel{padding:16px}.top-actions .btn{padding:8px 10px}.modal-actions .btn{flex:1}#authModal{width:calc(100vw - 20px);max-height:calc(100dvh - 16px);margin:auto}#authModal form{padding:18px 16px 22px;max-height:calc(100dvh - 16px)}#authModal #authGuide{grid-template-columns:1fr!important}#authModal #authGuide>div{padding:10px 12px!important}#authModal .modal-actions{display:grid;grid-template-columns:1fr 1fr;bottom:-22px;margin-left:-16px;margin-right:-16px;padding:12px 16px 18px}#authModal .modal-actions .btn{width:100%}#authModal .modal-actions button[onclick*="signUpCloud"]{grid-column:1/-1;grid-row:1}#authModal .modal-actions button[onclick*="signInCloud"]{grid-column:1/-1;grid-row:2}#authModal .modal-actions button[onclick*="close"]{grid-column:1/-1;grid-row:3;min-height:34px;background:transparent;border-color:transparent;color:#6b7280}}
+
+
+/* Tarjetas financieras: colores pastel discretos, sin depender del orden. */
+.kpi-card.kpi-income{background:#edf8f0;border-color:#cce6d3}
+.kpi-card.kpi-income::before{background:#5d9f75}
+.kpi-card.kpi-accounts{background:#fff7e9;border-color:#ecddb8}
+.kpi-card.kpi-accounts::before{background:#c49b42}
+.kpi-card.kpi-paid{background:#eef5ff;border-color:#d3e1f2}
+.kpi-card.kpi-paid::before{background:#7096c9}
+.kpi-card.kpi-overdue{background:#fff0f0;border-color:#efd1d1}
+.kpi-card.kpi-overdue::before{background:#cd8383}
+.kpi-card.kpi-clients{background:#f4f0ff;border-color:#e1d8f1}
+.kpi-card.kpi-clients::before{background:#9c83bf}
+.kpi-card[class*="kpi-"]{transition:box-shadow .18s ease,transform .18s ease}
+.kpi-card[class*="kpi-"]:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.07)}
