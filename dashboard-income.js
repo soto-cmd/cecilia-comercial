@@ -41,7 +41,14 @@
     set('kpiIngresoMes',cur.total);set('incomeCash',cur.cash);set('incomeCollections',cur.collections);set('incomeTotal',cur.total);
     const months=recentMonths(6),data=months.map(m=>({m,...monthIncome(m)})),max=Math.max(1,...data.map(x=>x.total));
     const box=document.getElementById('incomeHistory');if(!box)return;
-    box.innerHTML=`<div style="display:grid;gap:10px">${data.map(x=>`<div style="display:grid;grid-template-columns:minmax(76px,110px) 1fr minmax(110px,150px);gap:12px;align-items:center"><span style="font-size:13px;color:#64748b;text-transform:capitalize">${monthLabel(x.m)}</span><div style="height:10px;background:#f1ead7;border-radius:999px;overflow:hidden"><div style="height:100%;width:${Math.max(x.total?3:0,(x.total/max)*100)}%;background:#c9a227;border-radius:999px"></div></div><strong style="text-align:right">${money(x.total)}</strong></div>`).join('')}</div><p style="margin:14px 0 0;color:#64748b;font-size:12px">Cálculo: ventas al contado + pagos/cobros registrados en el mes. Las ventas a crédito no se cuentan como ingreso hasta que se cobran.</p>`;
+    const maxVal=Math.max(1,...data.map(x=>Math.max(x.total,x.cash,x.collections)));
+    const points=data.map((x,i)=>[35+i*112,145-125*x.total/maxVal]);
+    const line=points.map(p=>p.join(",")).join(" ");
+    const columns=data.map(x=>{
+      const bars=[["cash","#5d9f75"],["collections","#5999c8"]].map(([k,color])=>"<span style=\"height:"+Math.max(x[k]?3:0,x[k]/maxVal*100)+"%;background:"+color+"\"></span>").join("");
+      return "<div class=\"cc-income-month\" title=\""+monthLabel(x.m)+": contado "+money(x.cash)+", cobros "+money(x.collections)+", total "+money(x.total)+"\"><div class=\"cc-income-pair\">"+bars+"</div><small>"+monthLabel(x.m)+"</small></div>";
+    }).join("");
+    box.innerHTML="<div class=\"cc-income-legend\"><span>● Contado</span><span>● Cobros</span><span>● Total</span></div><div class=\"cc-income-chart\"><svg class=\"cc-income-line\" viewBox=\"0 0 630 165\" preserveAspectRatio=\"none\" role=\"img\" aria-label=\"Tendencia de ingresos totales\"><polyline points=\""+line+"\" fill=\"none\" stroke=\"#c9a227\" stroke-width=\"3\" vector-effect=\"non-scaling-stroke\"/></svg><div class=\"cc-income-columns\">"+columns+"</div></div><p class=\"cc-income-note\">Ingresos = ventas al contado + cobros recibidos. Las ventas a crédito se contabilizan cuando se cobran.</p>";
   }
 
   const previousRenderAll=renderAll;
