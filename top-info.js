@@ -7,12 +7,18 @@ const paraguay=()=>new Date().toLocaleString('es-PY',{timeZone:'America/Asuncion
 function init(){
 const dash=$('dashboard');if(!dash||$('ccTopInfo'))return;
 const el=document.createElement('section');el.id='ccTopInfo';el.className='cc-top-info';
-el.innerHTML='<div class="cc-info-tile"><span class="cc-info-icon" aria-hidden="true">◷</span><div><small>Fecha y hora · Paraguay</small><strong id="ccClock">—</strong></div></div>'+
-'<div class="cc-info-tile"><span class="cc-info-icon" aria-hidden="true">☁</span><div><small>Clima · Santa María de Fe</small><strong id="ccWeather">Consultando...</strong><small id="ccWeatherInfo">Open-Meteo</small></div></div>'+
+el.innerHTML=
 '<div class="cc-info-tile cc-fx"><span class="cc-info-icon" aria-hidden="true">$</span><div><small>Dólar · Cambios Chaco</small><strong id="ccRates">Consultando...</strong><small id="ccRatesInfo">Compra / venta · Gs. por USD</small><a href="https://www.cambioschaco.com.py/" target="_blank" rel="noopener noreferrer">Ver cotización oficial ↗</a></div></div>'+
 '<div class="cc-info-tile cc-convert"><div><small>Conversor USD ⇄ PYG</small><div class="cc-convert-fields"><input id="ccFxAmount" type="number" min="0" step="any" value="1" aria-label="Cantidad a convertir"><select id="ccFxDirection" aria-label="Sentido de conversión"><option value="usd-pyg">USD → Gs.</option><option value="pyg-usd">Gs. → USD</option></select></div><strong id="ccFxResult">Esperando cotización</strong><small id="ccFxHelp">Usa compra al vender USD y venta al comprar USD.</small></div></div>';
+const topbar=document.querySelector('.topbar');
+if(topbar&&!$('ccHeaderInfo')){
+ const compact=document.createElement('div');
+ compact.id='ccHeaderInfo';compact.className='cc-header-info';
+ compact.innerHTML='<span id="ccClock" class="cc-header-clock" aria-label="Fecha y hora de Paraguay">—</span><span id="ccWeather" class="cc-header-weather" aria-label="Clima de Santa María de Fe" title="Clima · Santa María de Fe">☁ —</span><span id="ccWeatherInfo" class="cc-header-weather-source" hidden></span>';
+ topbar.insertBefore(compact,topbar.querySelector('.top-actions'));
+}
 const anchor=dash.querySelector('.page-head');if(anchor)anchor.insertAdjacentElement('afterend',el);else dash.insertBefore(el,dash.firstChild);
-const tick=()=>{$('ccClock').textContent=paraguay()};tick();setInterval(tick,60000);
+const tick=()=>{const target=$('ccClock');if(target)target.textContent=paraguay()};tick();setInterval(tick,60000);
 $('ccFxAmount').addEventListener('input',compute);$('ccFxDirection').addEventListener('change',compute);
 loadWeather();loadRates();
 }
@@ -34,7 +40,7 @@ const code=data.current.weather_code;
 const icon=code===0?'☀️':code<=3?'⛅':code>=51&&code<=67?'🌧️':code>=80&&code<=82?'🌦️':code>=95?'⛈️':'☁️';
 $('ccWeather').textContent=icon+' '+format(t,0)+' °C';
 $('ccWeatherInfo').textContent='Temperatura actual · Open-Meteo';
-}catch(e){$('ccWeather').textContent='Clima no disponible';$('ccWeatherInfo').textContent='Consultá más tarde'}
+}catch(e){$('ccWeather').textContent='☁ —';$('ccWeather').title='Clima no disponible';$('ccWeatherInfo').textContent='Consultá más tarde'}
 }
 async function loadRates(){
 /* Fuente oficial sin API pública documentada: lectura de su versión textual.
