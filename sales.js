@@ -1,4 +1,7 @@
 (()=>{
+  // Evita instalar dos veces el módulo y duplicar los controladores de guardado.
+  if(window.__ceciliaSalesInitialized)return;
+  window.__ceciliaSalesInitialized=true;
   // Cecilia Comercial · módulo de ventas v1
   const originalEmptyState=emptyState;
   emptyState=function(){const s=originalEmptyState();s.sales=[];return s};
@@ -153,7 +156,7 @@
   }
 
   const originalBindForms=bindForms;
-  bindForms=function(){originalBindForms();document.getElementById('saveSaleBtn')?.addEventListener('click',e=>{e.preventDefault();saveSale()})};
+  bindForms=function(){originalBindForms();const btn=document.getElementById('saveSaleBtn');if(btn&&!btn.dataset.ceciliaSaleBound){btn.dataset.ceciliaSaleBound='1';btn.addEventListener('click',e=>{e.preventDefault();saveSale()})}};
 
   window.deleteSale=function(sid){
     const v=(state.sales||[]).find(x=>x.id===sid&&!x.deletedAt);if(!v)return;
