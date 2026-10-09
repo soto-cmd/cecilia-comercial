@@ -51,3 +51,12 @@
 .cc-mix{display:flex;height:23px;border-radius:8px;overflow:hidden;background:#f1f5f9;margin:26px 0 20px}.cc-mix~p{padding:8px 0;border-bottom:1px solid #f1f5f9;font-size:13px}
 .cc-rank{margin:14px 0}.cc-rank>div:first-child{display:flex;justify-content:space-between;gap:10px;font-size:12px}.cc-rank b{white-space:nowrap}.cc-track{height:8px;border-radius:8px;background:#f3eee5;margin-top:6px}.cc-track span{display:block;height:100%;background:#b48b42;border-radius:8px}.cc-empty{font-size:13px;color:#64748b;padding:25px 0;text-align:center}
 @media(max-width:850px){.cc-graphs{grid-template-columns:1fr}.cc-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:470px){.cc-stat{padding:10px}.cc-stat strong{font-size:14px}}
+
+
+/* Resumen compacto: reloj, clima, cambios y conversor */
+.cc-top-info{display:grid;grid-template-columns:1.15fr 1fr 1.2fr 1.4fr;gap:10px;margin:-4px 0 19px}
+.cc-info-tile{display:flex;align-items:flex-start;gap:10px;min-width:0;border:1px solid #e8dabc;background:#fff;border-radius:13px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,0,0,.03)}
+.cc-info-tile>div{min-width:0;flex:1}.cc-info-tile small{display:block;color:#64748b;font-size:10px;line-height:1.4}.cc-info-tile strong{display:block;margin:4px 0;font-size:13px;color:#1c2939;line-height:1.45}.cc-info-icon{display:grid;place-items:center;width:29px;height:29px;flex:none;border-radius:8px;background:#fff5d9;color:#886313;font-weight:800}
+.cc-info-tile a{font-size:11px;color:#947019;text-decoration:underline;text-underline-offset:2px}.cc-convert-fields{display:flex;gap:5px;margin:5px 0}.cc-convert-fields input{width:43%;min-width:0}.cc-convert-fields select{width:57%;min-width:0}.cc-convert-fields input,.cc-convert-fields select{height:32px;border:1px solid #dacaa7;border-radius:6px;padding:4px 6px;font-size:12px}
+@media(max-width:1050px){.cc-top-info{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:550px){.cc-top-info{grid-template-columns:1fr}.cc-info-tile{padding:10px 12px}}
