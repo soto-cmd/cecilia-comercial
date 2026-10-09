@@ -39,3 +39,15 @@
 .kpi-card.kpi-clients::before{background:#9c83bf}
 .kpi-card[class*="kpi-"]{transition:box-shadow .18s ease,transform .18s ease}
 .kpi-card[class*="kpi-"]:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.07)}
+
+
+.cc-insights{margin:20px 0 26px}.cc-insights>h3{font-size:21px;margin:0 0 6px}.cc-insights>p,.cc-note{font-size:12px;color:#64748b;margin:0 0 14px}
+.cc-filters{display:flex;align-items:end;flex-wrap:wrap;gap:10px;padding:14px;background:#fff;border:1px solid #e9ddc5;border-radius:14px;margin-bottom:15px}
+.cc-filters label{display:flex;flex:1 1 150px;flex-direction:column;gap:5px;font-weight:700;font-size:12px}.cc-filters input,.cc-filters select{min-height:39px;padding:8px;border:1px solid #d7c9a5;border-radius:9px;background:#fff;max-width:100%}
+.cc-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:15px}.cc-stat{padding:15px;border:1px solid #e6dcc9;border-radius:12px;background:#fff}.cc-stat small{display:block;color:#64748b;margin-bottom:9px}.cc-stat strong{font-size:clamp(15px,1.5vw,22px)}
+.cc-graphs{display:grid;grid-template-columns:1.5fr 1fr;gap:14px}.cc-graphs .panel{min-width:0;margin:0}.cc-graphs h4{font-size:15px;margin:0 0 15px}
+.cc-legend{display:flex;gap:14px;flex-wrap:wrap;color:#64748b;font-size:11px}.cc-legend span:nth-child(1){color:#5d9f75}.cc-legend span:nth-child(2){color:#8975b8}.cc-legend span:nth-child(3){color:#5999c8}
+.cc-bars{display:flex;align-items:end;gap:6px;overflow:auto;min-height:210px;padding:8px 0}.cc-col{flex:1 0 32px;max-width:75px;text-align:center}.cc-col-bars{display:flex;justify-content:center;align-items:end;gap:3px;height:175px;border-bottom:1px solid #e5e7eb}.cc-col-bars span{display:block;flex:1;max-width:15px;border-radius:3px 3px 0 0}.cc-col small{font-size:10px;color:#64748b}
+.cc-mix{display:flex;height:23px;border-radius:8px;overflow:hidden;background:#f1f5f9;margin:26px 0 20px}.cc-mix~p{padding:8px 0;border-bottom:1px solid #f1f5f9;font-size:13px}
+.cc-rank{margin:14px 0}.cc-rank>div:first-child{display:flex;justify-content:space-between;gap:10px;font-size:12px}.cc-rank b{white-space:nowrap}.cc-track{height:8px;border-radius:8px;background:#f3eee5;margin-top:6px}.cc-track span{display:block;height:100%;background:#b48b42;border-radius:8px}.cc-empty{font-size:13px;color:#64748b;padding:25px 0;text-align:center}
+@media(max-width:850px){.cc-graphs{grid-template-columns:1fr}.cc-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:470px){.cc-stat{padding:10px}.cc-stat strong{font-size:14px}}
