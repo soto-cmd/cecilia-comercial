@@ -39,10 +39,10 @@
         <div class="page-head"><div><span class="eyebrow">Panel general</span><h2>Resumen de cobranzas</h2><p>Situación actual de clientes, saldos y pagos.</p></div><div class="button-row"><button class="btn btn-secondary" onclick="openDebtModal()">Registrar deuda</button><button class="btn btn-primary" onclick="openPaymentModal()">Registrar pago</button></div></div>
         <div class="panel" style="margin-bottom:18px;padding:16px 18px;border-left:4px solid #c9a227"><strong>Cómo usar esta pantalla</strong><p style="margin:6px 0 0">Acá ves el estado general del negocio. Registrá una deuda cuando un cliente compra a crédito y registrá un pago cuando recibís un cobro.</p></div>
         <div class="cards kpi-grid">
-          <article class="card kpi-card"><span class="kpi-label">Total por cobrar</span><strong id="kpiSaldo">Gs. 0</strong><small>Saldo pendiente acumulado</small></article>
-          <article class="card kpi-card"><span class="kpi-label">Cobrado este mes</span><strong id="kpiMes">Gs. 0</strong><small>Pagos registrados en el mes</small></article>
-          <article class="card kpi-card"><span class="kpi-label">Deuda vencida</span><strong id="kpiVencida">Gs. 0</strong><small>Saldos con vencimiento superado</small></article>
-          <article class="card kpi-card"><span class="kpi-label">Clientes con saldo</span><strong id="kpiClientes">0</strong><small>Clientes con deuda pendiente</small></article>
+          <article class="card kpi-card kpi-accounts"><span class="kpi-label">Total por cobrar</span><strong id="kpiSaldo">Gs. 0</strong><small>Saldo pendiente acumulado</small></article>
+          <article class="card kpi-card kpi-paid"><span class="kpi-label">Cobrado este mes</span><strong id="kpiMes">Gs. 0</strong><small>Pagos registrados en el mes</small></article>
+          <article class="card kpi-card kpi-overdue"><span class="kpi-label">Deuda vencida</span><strong id="kpiVencida">Gs. 0</strong><small>Saldos con vencimiento superado</small></article>
+          <article class="card kpi-card kpi-clients"><span class="kpi-label">Clientes con saldo</span><strong id="kpiClientes">0</strong><small>Clientes con deuda pendiente</small></article>
         </div>
         <div class="grid-2"><article class="panel"><div class="panel-head"><div><h3>Clientes con mayor saldo</h3><p>Prioridad de cobranza</p></div></div><div id="topClientes"></div></article><article class="panel"><div class="panel-head"><div><h3>Últimos pagos</h3><p>Movimientos más recientes</p></div></div><div id="ultimosPagos"></div></article></div>
       </section>
@@ -69,7 +69,7 @@
       <section id="reportes" class="view">
         <div class="page-head"><div><span class="eyebrow">Análisis</span><h2>Reportes</h2><p>Indicadores consolidados de cartera y cobranzas.</p></div><button class="btn btn-secondary" onclick="exportExcel()">Exportar Excel</button></div>
         <div class="panel" style="margin-bottom:18px;padding:16px 18px;border-left:4px solid #c9a227"><strong>Cómo usar los reportes</strong><p style="margin:6px 0 0">Revisá cuánto se debe, cuánto ya se cobró y el saldo de cada cliente. Usá “Exportar Excel” para guardar una copia y trabajar los datos fuera de Cecilia.</p></div>
-        <div class="cards report-grid"><article class="card kpi-card"><span class="kpi-label">Deuda total registrada</span><strong id="repDeuda">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Total cobrado</span><strong id="repPagado">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Saldo pendiente</span><strong id="repSaldo">Gs. 0</strong></article></div>
+        <div class="cards report-grid"><article class="card kpi-card kpi-accounts"><span class="kpi-label">Deuda total registrada</span><strong id="repDeuda">Gs. 0</strong></article><article class="card kpi-card kpi-paid"><span class="kpi-label">Total cobrado</span><strong id="repPagado">Gs. 0</strong></article><article class="card kpi-card kpi-overdue"><span class="kpi-label">Saldo pendiente</span><strong id="repSaldo">Gs. 0</strong></article></div>
         <article class="panel"><div class="panel-head"><div><h3>Saldos por cliente</h3><p>Comparativo de deuda, pagos y saldo</p></div></div><div id="reportClientBalances"></div></article>
       </section>
 
@@ -84,7 +84,7 @@
       <section id="clientDetail" class="view">
         <div class="page-head"><div><button class="link-btn" onclick="goView('clientes')">← Volver a clientes</button><span class="eyebrow">Cuenta corriente</span><h2 id="detailName">Cliente</h2><p id="detailMeta"></p></div><div class="button-row"><button class="btn btn-secondary" onclick="openDebtModal(currentClientId)">+ Deuda</button><button class="btn btn-primary" onclick="openPaymentModal(currentClientId)">+ Pago</button></div></div>
         <div class="panel" style="margin-bottom:18px;padding:16px 18px;border-left:4px solid #c9a227"><strong>Cuenta del cliente</strong><p style="margin:6px 0 0">Acá ves todos sus cargos y abonos. Podés registrar una deuda o un pago directamente para este cliente sin volver a seleccionarlo.</p></div>
-        <div class="cards report-grid"><article class="card kpi-card"><span class="kpi-label">Deuda registrada</span><strong id="detailDebt">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Pagado</span><strong id="detailPaid">Gs. 0</strong></article><article class="card kpi-card"><span class="kpi-label">Saldo</span><strong id="detailBalance">Gs. 0</strong></article></div>
+        <div class="cards report-grid"><article class="card kpi-card kpi-accounts"><span class="kpi-label">Deuda registrada</span><strong id="detailDebt">Gs. 0</strong></article><article class="card kpi-card kpi-paid"><span class="kpi-label">Pagado</span><strong id="detailPaid">Gs. 0</strong></article><article class="card kpi-card kpi-overdue"><span class="kpi-label">Saldo</span><strong id="detailBalance">Gs. 0</strong></article></div>
         <article class="panel"><div class="panel-head"><div><h3>Movimientos de la cuenta</h3><p>Cargos y abonos en orden cronológico</p></div></div><div class="table-wrap embedded"><table><thead><tr><th>Fecha</th><th>Movimiento</th><th>Detalle</th><th>Cargo</th><th>Abono</th><th>Saldo</th></tr></thead><tbody id="detailLedger"></tbody></table></div></article>
       </section>
     </section>
@@ -107,6 +107,7 @@
   <script src="sales.js"></script>
   <script src="dashboard-income.js"></script>
   <script src="support.js"></script>
+  <script src="filters.js"></script>
   <script>
     (()=>{
       const originalUpdateAuthUi=updateAuthUi;
