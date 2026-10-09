@@ -21,4 +21,3 @@
   };
 })();
 
-document.write('<script src="sales.js"><\/script>');
