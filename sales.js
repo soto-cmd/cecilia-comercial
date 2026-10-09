@@ -15,7 +15,7 @@
     base.sales=Array.isArray(safe.sales)?safe.sales.map(v=>({
       id:v.id||id(),clientId:v.clientId||'',concept:v.concept||'',amount:Number(v.amount)||0,
       date:v.date||today(),type:v.type==='Crédito'?'Crédito':'Contado',method:v.method||'Efectivo',
-      ref:v.ref||'',due:v.due||'',debtId:v.debtId||'',createdAt:Number(v.createdAt)||Date.now(),
+      ref:v.ref||'',due:v.due||'',notes:v.notes||'',debtId:v.debtId||'',createdAt:Number(v.createdAt)||Date.now(),
       updatedAt:v.updatedAt||stamp,deletedAt:v.deletedAt||''
     })):[];
     return base;
@@ -52,7 +52,7 @@
         <label>Tipo de venta<select id="sType"><option>Contado</option><option>Crédito</option></select></label>
         <label id="sMethodWrap">Medio de pago<select id="sMethod"><option>Efectivo</option><option>Transferencia</option><option>QR</option><option>Otro</option></select></label>
         <label id="sRefWrap">Referencia<input id="sRef" placeholder="Opcional" /></label>
-        <label id="sDueWrap" style="display:none">Vencimiento<input type="date" id="sDue" /></label>
+        <label id="sDueWrap" style="display:none">Vencimiento<input type="date" id="sDue" /></label><label>Notas adicionales (opcional)<textarea id="sNotes" rows="3" maxlength="3000" placeholder="Ej.: condiciones especiales, entrega, observaciones..."></textarea></label>
         <div class="modal-actions"><button type="button" class="btn btn-secondary" onclick="this.closest('dialog').close()">Cancelar</button><button type="button" class="btn btn-primary" id="saveSaleBtn">Guardar venta</button></div></form>`;
       document.body.insertBefore(dlg,document.getElementById('authModal'));
       document.getElementById('sType')?.addEventListener('change',toggleSaleFields);
@@ -102,7 +102,7 @@
   function renderSales(){
     const body=document.getElementById('salesTable');if(!body)return;
     const arr=[...active(state.sales||[])].sort((a,b)=>String(b.date).localeCompare(String(a.date))||Number(b.createdAt||0)-Number(a.createdAt||0));
-    body.innerHTML=arr.length?arr.map(v=>`<tr><td>${fmtDate(v.date)}</td><td>${esc(clientById(v.clientId)?.name||'-')}</td><td>${esc(v.concept)}</td><td><span class="status ${v.type==='Crédito'?'warn':'ok'}">${esc(v.type)}</span></td><td><strong>${money(v.amount)}</strong></td><td>${v.type==='Contado'?esc(v.method||'-'):'Cuenta corriente'}</td><td><div class="row-actions"><button class="btn btn-secondary btn-small" onclick="editSale('${v.id}')">Editar</button><button class="btn btn-danger btn-small" onclick="deleteSale('${v.id}')">Eliminar</button></div></td></tr>`).join(''):'<tr><td colspan="7" class="empty-row">No hay ventas registradas.</td></tr>';
+    body.innerHTML=arr.length?arr.map(v=>`<tr><td>${fmtDate(v.date)}</td><td>${esc(clientById(v.clientId)?.name||'-')}</td><td>${esc(v.concept)}${v.notes?`<small style="display:block;color:#766b58;white-space:normal;margin-top:4px">${esc(v.notes)}</small>`:''}</td><td><span class="status ${v.type==='Crédito'?'warn':'ok'}">${esc(v.type)}</span></td><td><strong>${money(v.amount)}</strong></td><td>${v.type==='Contado'?esc(v.method||'-'):'Cuenta corriente'}</td><td><div class="row-actions"><button class="btn btn-secondary btn-small" onclick="editSale('${v.id}')">Editar</button><button class="btn btn-danger btn-small" onclick="deleteSale('${v.id}')">Eliminar</button></div></td></tr>`).join(''):'<tr><td colspan="7" class="empty-row">No hay ventas registradas.</td></tr>';
   }
 
   function renderClientSales(){
@@ -131,7 +131,7 @@
   window.editSale=function(sid){
     const v=(state.sales||[]).find(x=>x.id===sid&&!x.deletedAt);if(!v)return;
     editingSaleId=sid;populateSaleClientSelect();document.getElementById('saleForm').reset();
-    document.getElementById('sClient').value=v.clientId;document.getElementById('sConcept').value=v.concept||'';document.getElementById('sAmount').value=v.amount||'';document.getElementById('sDate').value=v.date||today();document.getElementById('sType').value=v.type||'Contado';document.getElementById('sMethod').value=v.method||'Efectivo';document.getElementById('sRef').value=v.ref||'';document.getElementById('sDue').value=v.due||'';
+    document.getElementById('sClient').value=v.clientId;document.getElementById('sConcept').value=v.concept||'';document.getElementById('sAmount').value=v.amount||'';document.getElementById('sDate').value=v.date||today();document.getElementById('sType').value=v.type||'Contado';document.getElementById('sMethod').value=v.method||'Efectivo';document.getElementById('sRef').value=v.ref||'';document.getElementById('sDue').value=v.due||'';document.getElementById('sNotes').value=v.notes||'';
     document.querySelector('#saleModal .modal-head h3').textContent='Editar venta';document.getElementById('saveSaleBtn').textContent='Guardar cambios';toggleSaleFields();document.getElementById('saleModal').showModal();
   };
 
@@ -139,8 +139,8 @@
     const cid=document.getElementById('sClient').value,concept=document.getElementById('sConcept').value.trim(),amount=Number(document.getElementById('sAmount').value),date=document.getElementById('sDate').value||today(),type=document.getElementById('sType').value;
     if(!cid)return alert('Seleccioná un cliente.');if(!concept)return alert('Ingresá el concepto de la venta.');if(!(amount>0))return alert('Ingresá un monto válido mayor a cero.');
     let v=editingSaleId?(state.sales||[]).find(x=>x.id===editingSaleId):null;
-    if(!v){v={id:id(),clientId:cid,concept,amount,date,type,method:'Efectivo',ref:'',due:'',debtId:'',createdAt:Date.now(),updatedAt:nowIso(),deletedAt:''};state.sales.push(v)}
-    Object.assign(v,{clientId:cid,concept,amount,date,type,method:type==='Contado'?document.getElementById('sMethod').value:'',ref:type==='Contado'?document.getElementById('sRef').value.trim():'',due:type==='Crédito'?(document.getElementById('sDue').value||''):''});
+    if(!v){v={id:id(),clientId:cid,concept,amount,date,type,method:'Efectivo',ref:'',due:'',notes:'',debtId:'',createdAt:Date.now(),updatedAt:nowIso(),deletedAt:''};state.sales.push(v)}
+    Object.assign(v,{clientId:cid,concept,amount,date,type,method:type==='Contado'?document.getElementById('sMethod').value:'',ref:type==='Contado'?document.getElementById('sRef').value.trim():'',due:type==='Crédito'?(document.getElementById('sDue').value||''):'',notes:document.getElementById('sNotes').value.trim()});
     v.deletedAt='';v.updatedAt=nowIso();
 
     let linked=v.debtId?state.debts.find(d=>d.id===v.debtId):null;
@@ -166,9 +166,9 @@
   };
 
   const originalLocalToCloud=localToCloud;
-  localToCloud=function(table,r){if(table!=='sales')return originalLocalToCloud(table,r);const common={id:r.id,user_id:currentUser.id,workspace_id:workspaceId,created_at:new Date(r.createdAt||Date.now()).toISOString(),updated_at:r.updatedAt||nowIso(),deleted_at:r.deletedAt||null};return {...common,client_id:r.clientId,concept:r.concept,amount:Number(r.amount),sale_date:r.date,sale_type:r.type,method:r.method||null,reference:r.ref||null,due_date:r.due||null,debt_id:r.debtId||null}};
+  localToCloud=function(table,r){if(table!=='sales')return originalLocalToCloud(table,r);const common={id:r.id,user_id:currentUser.id,workspace_id:workspaceId,created_at:new Date(r.createdAt||Date.now()).toISOString(),updated_at:r.updatedAt||nowIso(),deleted_at:r.deletedAt||null};return {...common,client_id:r.clientId,concept:r.concept,amount:Number(r.amount),sale_date:r.date,sale_type:r.type,method:r.method||null,reference:r.ref||null,due_date:r.due||null,notes:r.notes||null,debt_id:r.debtId||null}};
   const originalCloudToLocal=cloudToLocal;
-  cloudToLocal=function(table,r){if(table!=='sales')return originalCloudToLocal(table,r);return {id:r.id,clientId:r.client_id,concept:r.concept||'',amount:Number(r.amount),date:r.sale_date,type:r.sale_type==='Crédito'?'Crédito':'Contado',method:r.method||'Efectivo',ref:r.reference||'',due:r.due_date||'',debtId:r.debt_id||'',createdAt:new Date(r.created_at).getTime(),updatedAt:r.updated_at,deletedAt:r.deleted_at||''}};
+  cloudToLocal=function(table,r){if(table!=='sales')return originalCloudToLocal(table,r);return {id:r.id,clientId:r.client_id,concept:r.concept||'',amount:Number(r.amount),date:r.sale_date,type:r.sale_type==='Crédito'?'Crédito':'Contado',method:r.method||'Efectivo',ref:r.reference||'',due:r.due_date||'',notes:r.notes||'',debtId:r.debt_id||'',createdAt:new Date(r.created_at).getTime(),updatedAt:r.updated_at,deletedAt:r.deleted_at||''}};
   const originalStateArray=stateArray;
   stateArray=function(table){return table==='sales'?state.sales:originalStateArray(table)};
   const originalMergeRemote=mergeRemote;
@@ -198,7 +198,7 @@
   exportExcel=function(){
     if(typeof XLSX==='undefined')return alert('El módulo de Excel no está disponible.');
     const clientes=active(state.clients).map(c=>({Cliente:c.name,'Cédula/RUC':c.doc||'',Teléfono:c.phone||'',Dirección:c.address||'',Observaciones:c.notes||'','Ventas totales':totalSales(c.id),'Deuda total':totalDebt(c.id),'Total pagado':totalPaid(c.id),'Saldo pendiente':balance(c.id)}));
-    const ventas=active(state.sales||[]).map(v=>({Fecha:fmtDate(v.date),Cliente:clientById(v.clientId)?.name||'',Concepto:v.concept,Tipo:v.type,Monto:Number(v.amount),'Medio de pago':v.type==='Contado'?v.method:'Cuenta corriente',Referencia:v.ref||'',Vencimiento:v.due?fmtDate(v.due):''}));
+    const ventas=active(state.sales||[]).map(v=>({Fecha:fmtDate(v.date),Cliente:clientById(v.clientId)?.name||'',Concepto:v.concept,Notas:v.notes||'',Tipo:v.type,Monto:Number(v.amount),'Medio de pago':v.type==='Contado'?v.method:'Cuenta corriente',Referencia:v.ref||'',Vencimiento:v.due?fmtDate(v.due):''}));
     const deudas=active(state.debts).map(d=>({Cliente:clientById(d.clientId)?.name||'',Concepto:d.concept,Fecha:fmtDate(d.date),Vencimiento:d.due?fmtDate(d.due):'',Monto:Number(d.amount),'Saldo pendiente':debtRemaining(d),Estado:debtRemaining(d)<=0?'Pagada':(d.due&&d.due<today()?'Vencida':'Pendiente')}));
     const pagos=active(state.payments).map(p=>({Fecha:fmtDate(p.date),Cliente:clientById(p.clientId)?.name||'',Monto:Number(p.amount),'Medio de pago':p.method,Referencia:p.ref||''}));
     const resumen=[{Indicador:'Ventas totales registradas',Monto:totalSales()},{Indicador:'Ventas al contado',Monto:cashSales()},{Indicador:'Deuda total registrada',Monto:totalDebt()},{Indicador:'Total cobrado de deudas',Monto:totalPaid()},{Indicador:'Saldo pendiente',Monto:balance()},{Indicador:'Cantidad de clientes',Monto:active(state.clients).length}];
