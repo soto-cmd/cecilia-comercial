@@ -16,11 +16,6 @@
   }
   function ensureIncomeDashboard(){
     const dash=document.getElementById('dashboard');if(!dash)return;
-    const cards=dash.querySelector('.kpi-grid');if(cards&&!document.getElementById('kpiIngresoMes')){
-      const card=document.createElement('article');card.className='card kpi-card kpi-income';
-      card.innerHTML='<span class="kpi-label">Ingresos del mes</span><strong id="kpiIngresoMes">Gs. 0</strong><small>Contado + cobros recibidos, sin duplicar ventas a crédito</small>';
-      cards.insertBefore(card,cards.firstChild);
-    }
     if(!document.getElementById('incomeDashboard')){
       const grid=dash.querySelector('.grid-2');
       const panel=document.createElement('article');panel.id='incomeDashboard';panel.className='panel';panel.style.marginBottom='18px';
@@ -38,7 +33,10 @@
     ensureIncomeDashboard();
     const ym=today().slice(0,7),cur=monthIncome(ym);
     const set=(id,v)=>{const n=document.getElementById(id);if(n)n.textContent=money(v)};
-    set('kpiIngresoMes',cur.total);set('incomeCash',cur.cash);set('incomeCollections',cur.collections);set('incomeTotal',cur.total);
+    const historicCash=active(state.sales||[]).filter(v=>v.type==='Contado').reduce((total,v)=>total+Number(v.amount||0),0);
+    const historicCollections=active(state.payments||[]).reduce((total,p)=>total+Number(p.amount||0),0);
+    set('kpiTotalHistorico',historicCash+historicCollections);set('kpiMes',cur.total);
+    set('incomeCash',cur.cash);set('incomeCollections',cur.collections);set('incomeTotal',cur.total);
     const months=recentMonths(6),data=months.map(m=>({m,...monthIncome(m)})),max=Math.max(1,...data.map(x=>x.total));
     const box=document.getElementById('incomeHistory');if(!box)return;
     const maxVal=Math.max(1,...data.map(x=>Math.max(x.total,x.cash,x.collections)));
