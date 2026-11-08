@@ -125,3 +125,10 @@
 .modal-actions button{min-height:42px}
 button:disabled{cursor:not-allowed;opacity:.65;transform:none!important}
 @media(max-width:600px){.cc-collection-main{grid-template-columns:1fr}.cc-collection-panel{min-height:unset}.row-actions .btn{min-height:40px}}
+
+/* Abonos parciales: visibles sin alterar los cobros */
+.status.partial{background:#fff3d6;color:#925600;border:1px solid #eed49b}
+#clientDebtPayments h3{font-size:16px;margin:0 0 8px}
+#clientDebtPayments .cc-debt-note{color:#6b7280;font-size:12px;line-height:1.5;margin:0 0 14px}
+#clientDebtPayments .table-wrap{max-width:100%;overflow-x:auto}
+#clientDebtPayments td,#clientDebtPayments th{font-variant-numeric:tabular-nums}
