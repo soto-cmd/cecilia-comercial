@@ -139,3 +139,73 @@ button:disabled{cursor:not-allowed;opacity:.65;transform:none!important}
 #dashboard .kpi-grid .kpi-card strong{overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
 @media(max-width:950px){#dashboard .kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){#dashboard .kpi-grid{grid-template-columns:1fr}}
+
+
+/* Experiencia móvil compacta — conserva secciones, nombres y funciones */
+@media(max-width:650px){
+  .topbar{
+    min-height:0;height:auto;padding:8px 12px 7px;gap:5px 8px;
+    display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;
+  }
+  .topbar .brand{min-width:0}
+  .topbar .brand-mark{width:42px;height:42px;min-width:42px;border-radius:11px;font-size:19px}
+  .topbar .top-actions{min-width:0;justify-content:flex-end;gap:5px;flex-wrap:wrap}
+  .topbar .top-actions .btn{min-height:36px;padding:6px 8px;font-size:11px;white-space:nowrap}
+  .topbar #userGreeting{font-size:11px!important;white-space:nowrap}
+  .cc-header-info{grid-column:1/-1;order:unset;min-width:0;justify-content:center;gap:8px;padding:3px 0 0;flex:unset}
+  .cc-header-clock{font-size:10px;white-space:normal;text-align:center;line-height:1.25}
+  .cc-header-weather{font-size:11px;white-space:nowrap;padding-left:8px}
+  .layout{min-height:calc(100vh - 95px)}
+  .sidebar{top:0;gap:2px;padding:6px 9px;scrollbar-width:thin;scroll-padding-inline:10px}
+  .nav{padding:7px 9px;font-size:13px;gap:7px}
+  .nav.active{font-weight:750}
+  .content{padding:12px 12px 22px}
+  .page-head{gap:12px;margin-bottom:14px}
+  .page-head h2{font-size:23px}
+  .page-head p{font-size:12px;line-height:1.4}
+  .page-head .button-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+  .page-head .button-row .btn{min-width:0;min-height:44px;padding:8px 5px;font-size:12px;line-height:1.2;white-space:normal;overflow-wrap:normal;text-align:center}
+  .view>.panel[style*="border-left"]{padding:12px 14px!important;margin-bottom:14px!important}
+  .view>.panel[style*="border-left"] strong{font-size:13px}
+  .view>.panel[style*="border-left"] p{font-size:12px;line-height:1.4;margin-top:4px!important}
+  .cc-filters{gap:8px;padding:10px}
+  .cc-filters label{flex:1 1 125px;min-width:0;font-size:11px}
+  .cc-filters input,.cc-filters select{min-height:42px}
+  .cc-collection-main>div,.cc-collection-month{padding:12px}
+  .cc-collection-main{gap:8px;margin-bottom:12px}
+  .cc-collection-panel{padding:14px}
+  .cc-graphs{gap:10px}
+  .panel{margin-bottom:14px}
+  .row-actions{gap:6px}
+  .row-actions .btn{min-height:42px}
+  dialog{max-width:calc(100vw - 16px);width:calc(100vw - 16px)}
+  dialog form{padding:16px}
+  dialog input,dialog select,dialog textarea{font-size:16px}
+}
+@media(max-width:650px){
+  /* Las cifras de negocio deben verse antes del bloque de cotización */
+  #dashboard{display:flex;flex-direction:column;min-width:0}
+  #dashboard>.page-head{order:0}
+  #dashboard>.kpi-grid{order:1;margin-bottom:14px}
+  #dashboard>#ccTopInfo{order:2;margin-bottom:12px}
+  #dashboard>.panel[style*="border-left"]{order:3}
+  #dashboard>#ccInsights{order:4}
+  #dashboard>#incomeDashboard{order:5}
+  #dashboard>.grid-2{order:6}
+  #dashboard .kpi-grid{grid-template-columns:1fr!important;gap:8px}
+  #dashboard .kpi-card{padding:11px 13px!important}
+  #dashboard .kpi-card .kpi-label{margin-bottom:5px;font-size:11px}
+  #dashboard .kpi-card strong{font-size:23px!important}
+  #dashboard .kpi-card small{font-size:10px;margin-top:5px}
+  .cc-top-info{grid-template-columns:1fr!important;gap:8px}
+  .cc-info-tile{padding:10px 12px}
+}
+@media(min-width:470px) and (max-width:650px){
+  #dashboard .kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #dashboard .kpi-grid .kpi-card:first-child{grid-column:1/-1}
+}
+@media(max-width:370px){
+  .topbar .top-actions{gap:3px}
+  .topbar .top-actions .btn{font-size:10px;padding:5px 6px}
+  .page-head .button-row .btn{font-size:11px}
+}
