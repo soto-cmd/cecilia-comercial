@@ -30,12 +30,12 @@ const sales=active('sales').filter(match);
 const allDebts=active('debts'),allPayments=active('payments');
 const debtors=clients.filter(client=>balance(client.id)>0);
 const pending=debtors.reduce((n,client)=>n+Math.max(0,balance(client.id)),0);
-const overdue=allDebts.filter(debt=>debt.due&&debt.due<today()).reduce((n,debt)=>n+Math.max(0,debtRemaining(debt)),0);
+
 const month=today().slice(0,7);
 const monthlyPayments=allPayments.filter(payment=>String(payment.date||'').slice(0,7)===month);
 const monthPaid=sum(monthlyPayments);
-const safeOverdue=Math.min(pending,overdue);
-$('ccCollectionPending').innerHTML='<div class="cc-collection-main"><div><span class="cc-collection-caption">Clientes con deuda</span><strong class="cc-collection-count">'+debtors.length+'</strong><small>clientes con saldo pendiente</small></div><div><span class="cc-collection-caption">Total por cobrar</span><strong>'+fmt(pending)+'</strong><small>Saldo actual de todas las cuentas</small></div></div><div class="cc-collection-foot"><span>Deuda vencida</span><strong>'+fmt(safeOverdue)+'</strong></div>';
+
+$('ccCollectionPending').innerHTML='<div class="cc-collection-main"><div><span class="cc-collection-caption">Clientes con deuda</span><strong class="cc-collection-count">'+debtors.length+'</strong><small>clientes con saldo pendiente</small></div><div><span class="cc-collection-caption">Total por cobrar</span><strong>'+fmt(pending)+'</strong><small>Saldo actual de todas las cuentas</small></div></div>';
 $('ccCollectionMonthly').innerHTML='<div class="cc-collection-month"><span class="cc-collection-caption">Total recibido este mes</span><strong>'+fmt(monthPaid)+'</strong><small>'+monthlyPayments.length+' pago(s) registrado(s) · '+new Intl.DateTimeFormat('es-PY',{month:'long',year:'numeric'}).format(new Date())+'</small></div><div class="cc-collection-foot"><span>Último cobro registrado</span><strong>'+(allPayments.length?fmtDate([...allPayments].sort((x,y)=>String(y.date||'').localeCompare(String(x.date||'')))[0].date):'Sin pagos')+'</strong></div>';
 
 const counts=new Map();sales.forEach(x=>{const name=clients.find(c=>c.id===x.clientId)?.name||'Venta sin cliente',key=x.clientId||'_anonymous',entry=counts.get(key)||{name,value:0};entry.value++;counts.set(key,entry)});
