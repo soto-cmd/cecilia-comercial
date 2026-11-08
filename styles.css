@@ -209,3 +209,10 @@ button:disabled{cursor:not-allowed;opacity:.65;transform:none!important}
   .topbar .top-actions .btn{font-size:10px;padding:5px 6px}
   .page-head .button-row .btn{font-size:11px}
 }
+
+/* Ajustes de precisión para conservar botones de las otras secciones */
+@media(max-width:650px){
+  .page-head .button-row{display:flex;flex-wrap:wrap;gap:8px}
+  #dashboard>.page-head .button-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+  .sidebar{top:94px}
+}
