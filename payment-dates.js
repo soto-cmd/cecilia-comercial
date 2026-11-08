@@ -24,7 +24,7 @@
     }
     const debts=[...active(state.debts)].sort((a,b)=>String(b.date).localeCompare(String(a.date)));
     const rows=[...table.querySelectorAll('tbody tr')];
-    if(!debts.length){const cell=table.querySelector('tbody .empty-row');if(cell)cell.colSpan=10;return;}
+    if(!debts.length){const cell=table.querySelector('tbody .empty-row');if(cell)cell.colSpan=9;return;}
     const last=new Map();
     for(const d of debts)if(!last.has(d.clientId))last.set(d.clientId,clientDates(d.clientId).last);
     debts.forEach((d,i)=>{
