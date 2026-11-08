@@ -132,3 +132,10 @@ button:disabled{cursor:not-allowed;opacity:.65;transform:none!important}
 #clientDebtPayments .cc-debt-note{color:#6b7280;font-size:12px;line-height:1.5;margin:0 0 14px}
 #clientDebtPayments .table-wrap{max-width:100%;overflow-x:auto}
 #clientDebtPayments td,#clientDebtPayments th{font-variant-numeric:tabular-nums}
+
+/* Tres indicadores esenciales sin cambiar el orden del dashboard */
+#dashboard .kpi-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+#dashboard .kpi-grid .kpi-card{min-width:0}
+#dashboard .kpi-grid .kpi-card strong{overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+@media(max-width:950px){#dashboard .kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){#dashboard .kpi-grid{grid-template-columns:1fr}}
