@@ -39,10 +39,9 @@
         <div class="page-head"><div><span class="eyebrow">Panel general</span><h2>Resumen de cobranzas</h2><p>Situación actual de clientes, saldos y pagos.</p></div><div class="button-row"><button class="btn btn-secondary" onclick="openDebtModal()">Registrar deuda</button><button class="btn btn-primary" onclick="openPaymentModal()">Registrar pago</button></div></div>
         <div class="panel" style="margin-bottom:18px;padding:16px 18px;border-left:4px solid #c9a227"><strong>Cómo usar esta pantalla</strong><p style="margin:6px 0 0">Acá ves el estado general del negocio. Registrá una deuda cuando un cliente compra a crédito y registrá un pago cuando recibís un cobro.</p></div>
         <div class="cards kpi-grid">
-          <article class="card kpi-card kpi-accounts"><span class="kpi-label">Total por cobrar</span><strong id="kpiSaldo">Gs. 0</strong><small>Saldo pendiente acumulado</small></article>
-          <article class="card kpi-card kpi-paid"><span class="kpi-label">Cobrado este mes</span><strong id="kpiMes">Gs. 0</strong><small>Pagos registrados en el mes</small></article>
-          <article class="card kpi-card kpi-overdue"><span class="kpi-label">Deuda vencida</span><strong id="kpiVencida">Gs. 0</strong><small>Saldos con vencimiento superado</small></article>
-          <article class="card kpi-card kpi-clients"><span class="kpi-label">Clientes con saldo</span><strong id="kpiClientes">0</strong><small>Clientes con deuda pendiente</small></article>
+          <article class="card kpi-card kpi-income"><span class="kpi-label">Total ingresado desde el inicio</span><strong id="kpiTotalHistorico">Gs. 0</strong><small>Ventas al contado + cobros de deudas registrados</small></article>
+          <article class="card kpi-card kpi-paid"><span class="kpi-label">Ingresos de este mes</span><strong id="kpiMes">Gs. 0</strong><small>Ventas al contado + cobros del mes</small></article>
+          <article class="card kpi-card kpi-accounts"><span class="kpi-label">Total por cobrar</span><strong id="kpiSaldo">Gs. 0</strong><small>Saldo pendiente de clientes</small></article>
         </div>
         <div class="grid-2"><article class="panel"><div class="panel-head"><div><h3>Clientes con mayor saldo</h3><p>Prioridad de cobranza</p></div></div><div id="topClientes"></div></article><article class="panel"><div class="panel-head"><div><h3>Últimos pagos</h3><p>Movimientos más recientes</p></div></div><div id="ultimosPagos"></div></article></div>
       </section>
