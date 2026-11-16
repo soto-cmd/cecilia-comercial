@@ -216,3 +216,19 @@ button:disabled{cursor:not-allowed;opacity:.65;transform:none!important}
   #dashboard>.page-head .button-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
   .sidebar{top:94px}
 }
+
+/* Correcciones móviles: respetar la navegación y mantener acciones legibles. */
+@media(max-width:650px){
+  #dashboard.view:not(.active){display:none}
+  #dashboard.view.active{display:flex}
+  .content,.view,.panel,.grid-2,.page-head{min-width:0}
+  .table-wrap{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+@media(max-width:410px){
+  #dashboard>.page-head .button-row{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  #dashboard>.page-head .button-row .btn:first-child{
+    grid-column:1/-1;
+  }
+}
